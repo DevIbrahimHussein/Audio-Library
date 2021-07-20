@@ -20,10 +20,17 @@ const databaseConnection = require('./src/config/database.config')
 
 const apis = require('./src/routes')
 
+const logger = require('./src/middleware/logger.middleware')
+
+const trimRequest = require('./src/middleware/trim-request.middleware')
+
+
 databaseConnection()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(logger)
+app.use(trimRequest)
 
 app.use('/api', apis)
 
