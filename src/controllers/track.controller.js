@@ -19,14 +19,14 @@ exports.addTrack = catchAsync(async (req, res, next) => {
 
 exports.updateTrack = catchAsync(async (req, res, next) => {
 
-    req.data = await updateTrackById(req.params.trackId, req.body)
+    req.data = await updateTrackById(req.params.songId, req.body)
     next()
 
 })
 
 exports.deleteTrack = catchAsync(async (req, res, next) => {
     
-    req.data = await deleteTrackById(req.params.trackId)
+    req.data = await deleteTrackById(req.params.songId)
     next()
 
 })
