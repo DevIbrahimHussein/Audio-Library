@@ -1,23 +1,21 @@
 const catchAsync = require('../utils/errors')
 
-module.exports = {
 
-    listCategories = catchAsync(async(req, res, next) => {
-
-    }),
-
-    addCategory = catchAsync(async(req, res, next) => {
-
-
+    exports.listCategories = catchAsync(async(req, res, next) => {
 
     }),
 
-    updateCategory = catchAsync(async(req, res, next) => {
+    exports.addCategory = catchAsync(async(req, res, next) => {
+
+
 
     }),
 
-    deleteCategory = catchAsync(async(req, res, next) => {
+    exports.updateCategory = catchAsync(async(req, res, next) => {
+
+    }),
+
+    exports.deleteCategory = catchAsync(async(req, res, next) => {
 
     })
 
-}
