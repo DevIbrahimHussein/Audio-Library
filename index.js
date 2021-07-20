@@ -16,7 +16,11 @@ const app = express()
 
 require('dotenv').config()
 
+const databaseConnection = require('./src/config/database.config') 
+
 const apis = require('./src/routes')
+
+databaseConnection()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

@@ -3,7 +3,7 @@ const catchAsync = require('../utils/errors')
 module.exports = {
 
     listAlbums = catchAsync(async(req, res, next) => {
-
+        
     }),
 
     addAlbum = catchAsync(async(req, res, next) => {
@@ -19,5 +19,5 @@ module.exports = {
     deleteAlbum = catchAsync(async(req, res, next) => {
 
     })
-    
+
 }

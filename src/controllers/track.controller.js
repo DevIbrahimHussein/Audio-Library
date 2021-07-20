@@ -1,6 +1,5 @@
 const catchAsync = require('../utils/errors')
 
-
 module.exports = {
 
     listTracks = catchAsync(async(req, res, next) => {
