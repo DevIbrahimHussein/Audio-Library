@@ -19,12 +19,12 @@ const album = mongoose.Schema({
 
     createdDate: {
         type: String,
+        default: Date.now(),
         require: true
     },
 
     updatedDate: {
-        type: String,
-        require: true
+        type: String
     }
 
 })
