@@ -1,4 +1,4 @@
-const model = require('../model/tracks.model')
+const model = require('../model/track.model')
 
 module.exports = {
 
