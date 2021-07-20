@@ -1,21 +1,24 @@
+const catchAsync = require('../utils/errors')
+
+
 module.exports = {
 
-    listTracks = async(req, res, next) => {
+    listTracks = catchAsync(async(req, res, next) => {
 
-    },
+    }),
 
-    addTrack = async(req, res, next) => {
+    addTrack = catchAsync(async(req, res, next) => {
 
 
 
-    },
+    }),
 
-    updateTrack = async(req, res, next) => {
+    updateTrack = catchAsync(async(req, res, next) => {
 
-    },
+    }),
 
-    deleteTrack = async(req, res, next) => {
+    deleteTrack = catchAsync(async(req, res, next) => {
 
-    }
+    })
 
 }

@@ -1,21 +1,23 @@
+const catchAsync = require('../utils/errors')
+
 module.exports = {
 
-    listAlbums = async(req, res, next) => {
+    listAlbums = catchAsync(async(req, res, next) => {
 
-    },
+    }),
 
-    addAlbum = async(req, res, next) => {
+    addAlbum = catchAsync(async(req, res, next) => {
 
 
 
-    },
+    }),
 
-    updateAlbum = async(req, res, next) => {
+    updateAlbum = catchAsync(async(req, res, next) => {
 
-    },
+    }),
 
-    deleteAlbum = async(req, res, next) => {
+    deleteAlbum = catchAsync(async(req, res, next) => {
 
-    }
-
+    })
+    
 }
