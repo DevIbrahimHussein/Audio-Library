@@ -66,7 +66,7 @@ router.put('/song/:songId',
     dataHandler
 )
 
-router.delete('/song:SongId',
+router.delete('/song/:songId',
     deleteTrack,
     dataHandler
 )
