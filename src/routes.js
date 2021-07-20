@@ -39,12 +39,12 @@ router.get('/albums',
     dataHandler
 )
 
-router.put('/album/:categoryId',
+router.put('/album/:albumId',
     updateAlbum,
     dataHandler
 )
 
-router.delete('/album/:categoryId',
+router.delete('/album/:albumId',
     deleteAlbum,
     dataHandler
 )
