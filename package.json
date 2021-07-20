@@ -1,0 +1,30 @@
+{
+  "name": "audio-library-api",
+  "version": "1.0.0",
+  "description": "APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevIbrahimHussein/Audio-Library.git"
+  },
+  "keywords": [
+    "audio",
+    "album",
+    "tracks",
+    "singer",
+    "categories"
+  ],
+  "author": "Ibrahim Hussein",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevIbrahimHussein/Audio-Library/issues"
+  },
+  "homepage": "https://github.com/DevIbrahimHussein/Audio-Library#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.3"
+  }
+}
