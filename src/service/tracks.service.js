@@ -13,15 +13,34 @@ module.exports = {
     },
 
     allTrack(){
-        return model.find()
+        return model
+        .find()
+        .populate({
+            path: 'category',
+            model: 'Category'
+        })
+        .populate({
+            path: 'album',
+            model: 'Album'
+        })
     },
 
     insertTrack(track){
-        return track.save()
+        return track
+        .save()
     },
 
     updateTrackById(trackId, track){
-        return model.findByIdAndUpdate(trackId, track)
+        return model
+        .findByIdAndUpdate(trackId, track)
+        .populate({
+            path: 'category',
+            model: 'Category'
+        })
+        .populate({
+            path: 'album',
+            model: 'Album'
+        })
     },
 
     deleteTrackById(trackId){

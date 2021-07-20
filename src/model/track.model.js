@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const Category = require('./category.model')
+const Album = require('./album.model')
 
 const track = mongoose.Schema({
     
@@ -14,11 +16,13 @@ const track = mongoose.Schema({
 
     category: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: Category,
         require: true
     },
 
     album: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: Album,
         require: true
     }
 
