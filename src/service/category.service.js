@@ -3,7 +3,10 @@ const model = require('../model/category.model')
 module.exports = {
 
     createModel(reqBody){
-        return new model(reqBody)
+        return new model({
+            name: reqBody.name,
+            description: reqBody.description,
+        })
     },
 
     allCategories(){
