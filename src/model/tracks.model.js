@@ -13,12 +13,12 @@ const track = mongoose.Schema({
     },
 
     category: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         require: true
     },
 
     album: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         require: true
     }
 
