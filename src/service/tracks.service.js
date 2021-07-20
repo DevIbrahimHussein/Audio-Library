@@ -6,19 +6,19 @@ module.exports = {
         return new model(reqBody)
     },
 
-    alltrack(){
+    allTrack(){
         return model.find()
     },
 
-    inserttrack(track){
+    insertTrack(track){
         return track.save()
     },
 
-    updatetrackById(trackId, track){
+    updateTrackById(trackId, track){
         return model.findByIdAndUpdate(trackId, track)
     },
 
-    deletetrackById(trackId){
+    deleteTrackById(trackId){
         return model.findByIdAndDelete(trackId)
     }
 

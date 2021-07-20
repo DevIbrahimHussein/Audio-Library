@@ -13,7 +13,7 @@ const album = mongoose.Schema({
     },
 
     showNbTracks: {
-        type: String,
+        type: Number,
         require: true
     }
 
