@@ -14,6 +14,10 @@ module.exports = {
         return model.find()
     },
 
+    findById(albumId){
+        return model.findById(albumId)
+    },
+
     insertAlbum(album){
         return album.save()
     },

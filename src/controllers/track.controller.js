@@ -1,10 +1,17 @@
-const { createModel, allTrack, insertTrack, updateTrackById, deleteTrackById } = require('../service/tracks.service')
+const { createModel, allTrack, insertTrack, updateTrackById, deleteTrackById, findById } = require('../service/tracks.service')
 const catchAsync = require('../utils/errors')
 
 
 exports.listTracks = catchAsync(async (req, res, next) => {
 
     req.data = await allTrack()
+    next()
+
+})
+
+exports.getTrack = catchAsync(async (req, res, next) => {
+
+    req.data = await findById(req.params.songId)
     next()
 
 })

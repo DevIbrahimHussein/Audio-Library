@@ -25,6 +25,19 @@ module.exports = {
         })
     },
 
+    findById(trackId){
+        return model
+        .findById(trackId)
+        .populate({
+            path: 'category',
+            model: 'Category'
+        })
+        .populate({
+            path: 'album',
+            model: 'Album'
+        })
+    },
+
     insertTrack(track){
         return track
         .save()

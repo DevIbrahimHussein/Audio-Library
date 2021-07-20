@@ -17,6 +17,11 @@ router.get('/categories',
     dataHandler
 )
 
+router.get('/category/:categoryId',
+    listCategories,
+    dataHandler
+)
+
 router.put('/category/:categoryId',
     updateCategory,
     dataHandler
@@ -39,6 +44,11 @@ router.get('/albums',
     dataHandler
 )
 
+router.get('/album/albumId',
+    listAlbums,
+    dataHandler
+)
+
 router.put('/album/:albumId',
     updateAlbum,
     dataHandler
@@ -57,6 +67,11 @@ router.post('/song',
 )
 
 router.get('/songs',
+    listTracks,
+    dataHandler
+)
+
+router.get('/song/:songId',
     listTracks,
     dataHandler
 )

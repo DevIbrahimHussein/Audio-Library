@@ -13,6 +13,10 @@ module.exports = {
         return model.find()
     },
 
+    findById(categoryId){
+        return model.findById(categoryId)
+    },
+
     insertCategory(category){
         return category.save()
     },

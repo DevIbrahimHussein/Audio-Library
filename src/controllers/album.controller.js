@@ -1,9 +1,16 @@
-const { allAlbums, insertAlbum, updateAlbumById, deleteAlbumById, createModel } = require('../service/album.service')
+const { allAlbums, insertAlbum, updateAlbumById, deleteAlbumById, createModel, findById } = require('../service/album.service')
 const catchAsync = require('../utils/errors')
 
 exports.listAlbums = catchAsync(async (req, res, next) => {
 
     req.data = await allAlbums()
+    next()
+
+})
+
+exports.getAlbum = catchAsync(async (req, res, next) => {
+
+    req.data = await findById(req.params.albumId)
     next()
 
 })

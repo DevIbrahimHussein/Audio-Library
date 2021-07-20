@@ -1,10 +1,17 @@
-const { allCategories, insertCategory, createModel, updateCategoryById, deleteCategoryById } = require('../service/category.service')
+const { allCategories, insertCategory, createModel, updateCategoryById, deleteCategoryById, findById } = require('../service/category.service')
 const catchAsync = require('../utils/errors')
 
 
 exports.listCategories = catchAsync(async (req, res, next) => {
 
     req.data = await allCategories()
+    next()
+
+})
+
+exports.getCategory = catchAsync(async (req, res, next) => {
+
+    req.data = await findById(req.params.categoryId)
     next()
 
 })
