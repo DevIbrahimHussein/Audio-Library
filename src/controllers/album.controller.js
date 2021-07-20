@@ -27,6 +27,6 @@ exports.deleteAlbum = catchAsync(async (req, res, next) => {
 
     req.data = await deleteAlbumById(req.params.albumId)
     next()
-    
+
 })
 
