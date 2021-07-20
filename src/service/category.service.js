@@ -10,7 +10,7 @@ module.exports = {
         return model.find()
     },
 
-    insertAlbum(category){
+    insertCategory(category){
         return category.save()
     },
 
@@ -18,7 +18,7 @@ module.exports = {
         return model.findByIdAndUpdate(categoryId, category)
     },
 
-    deleteAlbumById(categoryId){
+    deleteCategoryById(categoryId){
         return model.findByIdAndDelete(categoryId)
     }
 
