@@ -15,18 +15,10 @@ const album = mongoose.Schema({
     showNbTracks: {
         type: String,
         require: true
-    },
-
-    createdDate: {
-        type: String,
-        default: Date.now(),
-        require: true
-    },
-
-    updatedDate: {
-        type: String
     }
 
+}, { 
+    timestamps: true 
 })
 
 module.exports = mongoose.model('Album', album)

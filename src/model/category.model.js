@@ -10,18 +10,10 @@ const category = mongoose.Schema({
     description: {
         type: String,
         require: true
-    },
-
-    createdDate: {
-        type: Date,
-        default: Date.now(),
-        require: true
-    },
-
-    updatedDate: {
-        type: Date
     }
 
+}, { 
+    timestamps: true 
 })
 
 module.exports = mongoose.model('Category', category)
