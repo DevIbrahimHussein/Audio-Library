@@ -10,7 +10,7 @@ exports.listTracks = catchAsync(async (req, res, next) => {
 
 })
 
-exports.getTrack = catchAsync(async (req, res, next) => {
+exports.getTrack = catchAsync(async (req, _, next) => {
 
     req.data = await findById(req.params.songId)
     next()
@@ -31,14 +31,14 @@ exports.addTrack = catchAsync(async (req, res, next) => {
 
 })
 
-exports.updateTrack = catchAsync(async (req, res, next) => {
+exports.updateTrack = catchAsync(async (req, _, next) => {
 
     req.data = await updateTrackById(req.params.songId, req.body)
     next()
 
 })
 
-exports.deleteTrack = catchAsync(async (req, res, next) => {
+exports.deleteTrack = catchAsync(async (req, _, next) => {
     
     req.data = await deleteTrackById(req.params.songId)
     next()

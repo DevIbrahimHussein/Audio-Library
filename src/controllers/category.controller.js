@@ -3,14 +3,14 @@ const catchAsync = require('../utils/errors')
 const { validateCategoryRequest } = require('../utils/validation')
 
 
-exports.listCategories = catchAsync(async (req, res, next) => {
+exports.listCategories = catchAsync(async (req, _, next) => {
 
     req.data = await allCategories()
     next()
 
 })
 
-exports.getCategory = catchAsync(async (req, res, next) => {
+exports.getCategory = catchAsync(async (req, _, next) => {
 
     req.data = await findById(req.params.categoryId)
     next()
