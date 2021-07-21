@@ -9,7 +9,7 @@ module.exports = {
         if(!data.name) 
             errors.name = "Name is required" 
         if(!data.description)
-            errors.name = "Description is required" 
+            errors.description = "Description is required" 
 
         return {
             errors, 
