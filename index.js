@@ -1,21 +1,10 @@
-/*
-|--------------------------------------------------------------------------
-| Audio Library
-|--------------------------------------------------------------------------
-|
-| Audio Library is semi-ecommerce application that can show all products
-| sort them and range by price, ... 
-| you can add to favorite, add to cart, order many products by sending them through email
-| 
-*/
-
-
+// laod express
 const express = require('express')
-
+// load app
 const app = express()
 
 require('dotenv').config()
-
+// load database
 const databaseConnection = require('./src/config/database.config') 
 
 const apis = require('./src/routes')
@@ -24,9 +13,10 @@ const logger = require('./src/middleware/logger.middleware')
 
 const trimRequest = require('./src/middleware/trim-request.middleware')
 
-
+// connect to db
 databaseConnection()
 
+// middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(logger)
