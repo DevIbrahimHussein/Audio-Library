@@ -1,5 +1,6 @@
 const { allAlbums, insertAlbum, updateAlbumById, deleteAlbumById, createModel, findById } = require('../service/album.service')
 const catchAsync = require('../utils/errors')
+const { validateAlbumRequest } = require('../utils/validation')
 
 exports.listAlbums = catchAsync(async (req, res, next) => {
 
@@ -16,6 +17,12 @@ exports.getAlbum = catchAsync(async (req, res, next) => {
 })
 
 exports.addAlbum = catchAsync(async (req, res, next) => {
+
+    const { errors, isValid } = validateAlbumRequest(req.body)
+
+    if(!isValid){
+        return res.status(404).json(errors)
+    }
 
     const model = createModel(req.body)
     req.data = await insertAlbum(model)

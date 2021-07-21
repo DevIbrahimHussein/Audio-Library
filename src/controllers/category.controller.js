@@ -1,5 +1,6 @@
 const { allCategories, insertCategory, createModel, updateCategoryById, deleteCategoryById, findById } = require('../service/category.service')
 const catchAsync = require('../utils/errors')
+const { validateCategoryRequest } = require('../utils/validation')
 
 
 exports.listCategories = catchAsync(async (req, res, next) => {
@@ -17,6 +18,12 @@ exports.getCategory = catchAsync(async (req, res, next) => {
 })
 
 exports.addCategory = catchAsync(async (req, res, next) => {
+
+    const { errors, isValid } = validateCategoryRequest(req.body)
+
+    if(!isValid){
+        return res.status(404).json(errors)
+    }
 
     const model = createModel(req.body)
     req.data = await insertCategory(model)

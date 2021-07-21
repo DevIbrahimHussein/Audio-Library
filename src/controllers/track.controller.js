@@ -1,5 +1,6 @@
 const { createModel, allTrack, insertTrack, updateTrackById, deleteTrackById, findById } = require('../service/tracks.service')
 const catchAsync = require('../utils/errors')
+const { validateTrackRequest } = require('../utils/validation')
 
 
 exports.listTracks = catchAsync(async (req, res, next) => {
@@ -17,6 +18,12 @@ exports.getTrack = catchAsync(async (req, res, next) => {
 })
 
 exports.addTrack = catchAsync(async (req, res, next) => {
+
+    const { errors, isValid } = validateTrackRequest(req.body)
+
+    if(!isValid){
+        return res.status(404).json(errors)
+    }
 
     const model = createModel(req.body)
     req.data = await insertTrack(model)
