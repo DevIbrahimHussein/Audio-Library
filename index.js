@@ -23,6 +23,7 @@ app.use(logger)
 app.use(trimRequest)
 
 app.use('/api', apis)
+app.use('*', (req, res) => { res.sendStatus(404) })
 
 app.listen(
   process.env.PORT,
