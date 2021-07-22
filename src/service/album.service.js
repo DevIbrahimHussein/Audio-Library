@@ -11,7 +11,9 @@ module.exports = {
     },
 
     allAlbums(){
-        return model.find().sort({ 'createdAt': 'desc' })
+        return model.aggregate([
+            { $sort: { createdAt: -1 } }
+        ])
     },
 
     findById(albumId){

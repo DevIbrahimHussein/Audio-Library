@@ -1,7 +1,7 @@
 const express = require('express')
-const { listAlbums, addAlbum, updateAlbum, deleteAlbum } = require('./controllers/album.controller')
-const { addCategory, listCategories, updateCategory, deleteCategory } = require('./controllers/category.controller')
-const { addTrack, listTracks, updateTrack, deleteTrack } = require('./controllers/track.controller')
+const { listAlbums, addAlbum, updateAlbum, deleteAlbum, getAlbum } = require('./controllers/album.controller')
+const { addCategory, listCategories, updateCategory, deleteCategory, getCategory } = require('./controllers/category.controller')
+const { addTrack, listTracks, updateTrack, deleteTrack, getTrack } = require('./controllers/track.controller')
 const router = express.Router()
 
 const { dataHandler } = require('./middleware/route-level.middleware')
@@ -18,7 +18,7 @@ router.get('/categories',
 )
 
 router.get('/category/:categoryId',
-    listCategories,
+    getCategory,
     dataHandler
 )
 
@@ -44,8 +44,8 @@ router.get('/albums',
     dataHandler
 )
 
-router.get('/album/albumId',
-    listAlbums,
+router.get('/album/:albumId',
+    getAlbum,
     dataHandler
 )
 
@@ -72,7 +72,7 @@ router.get('/songs',
 )
 
 router.get('/song/:songId',
-    listTracks,
+    getTrack,
     dataHandler
 )
 
