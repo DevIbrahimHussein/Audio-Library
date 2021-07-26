@@ -1,46 +1,68 @@
 const { allAlbums, insertAlbum, updateAlbumById, deleteAlbumById, createModel, findById } = require('../service/album.service')
-const catchAsync = require('../utils/errors')
-const { validateAlbumRequest } = require('../utils/validation')
+const { convertToObject } = require('../utils/helpers')
 
-exports.listAlbums = catchAsync(async (req, res, next) => {
+exports.listAlbums = async (req, res, next) => {
+    
+    try {
 
-    req.data = await allAlbums()
-    next()
+        const data = await allAlbums()
+        return res.json(data)
 
-})
-
-exports.getAlbum = catchAsync(async (req, res, next) => {
-
-    req.data = await findById(req.params.albumId)
-    next()
-
-})
-
-exports.addAlbum = catchAsync(async (req, res, next) => {
-
-    const { errors, isValid } = validateAlbumRequest(req.body)
-
-    if(!isValid){
-        return res.status(404).json(errors)
+    } catch(e) {
+        return res.status(500).json({msg: e})
     }
 
-    const model = createModel(req.body)
-    req.data = await insertAlbum(model)
-    next()
 
-})
+}
 
-exports.updateAlbum = catchAsync(async (req, res, next) => {
+exports.getAlbum = async (req, res, next) => {
+    
+    try {
 
-    req.data = await updateAlbumById(req.params.albumId, req.body)
-    next()
+        const data = await findById(convertToObject(req.params.albumId))
+    
+        return res.json(data)
 
-})
+    } catch(e) {
+        return res.status(500).json({msg: e})
+    }
 
-exports.deleteAlbum = catchAsync(async (req, res, next) => {
 
-    req.data = await deleteAlbumById(req.params.albumId)
-    next()
+}
 
-})
+exports.addAlbum = async (req, res, next) => {
+    
+    try {
+        
+        const model = createModel(req.body)
+        const data = await insertAlbum(model)
+        return res.json(data)
+
+    } catch(e) {
+        return res.status(500).json({msg: e})
+    }
+
+}
+
+exports.updateAlbum = async (req, res, next) => {
+    
+    try {
+        const data = await updateAlbumById(convertToObject(req.params.albumId), req.body)
+        return res.json(data)
+    } catch(e) {
+        return res.status(500).json({msg: e})
+    }
+
+
+}
+
+exports.deleteAlbum = async (req, res, next) => {
+    try {
+        const data = await deleteAlbumById(convertToObject(req.params.albumId))
+        return res.json(data)
+    } catch(e) {
+        return res.status(500).json({msg: e})    
+    }
+
+}
 

@@ -12,12 +12,15 @@ module.exports = {
 
     allAlbums(){
         return model.aggregate([
-            { $sort: { createdAt: -1 } }
+            { $sort: { createdDate: -1 } }
         ])
     },
 
     findById(albumId){
-        return model.findById(albumId)
+
+        return model.aggregate([
+            { $match : { _id: albumId } }
+        ])
     },
 
     insertAlbum(album){
@@ -25,7 +28,12 @@ module.exports = {
     },
 
     updateAlbumById(albumId, album){
-        return model.findByIdAndUpdate(albumId, album)
+        return model.updateOne(
+            { _id: albumId },
+            [{
+                $set : album
+            }]
+        )
     },
 
     deleteAlbumById(albumId){

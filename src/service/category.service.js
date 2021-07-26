@@ -14,7 +14,10 @@ module.exports = {
     },
 
     findById(categoryId){
-        return model.findById(categoryId)
+
+        return model.aggregate([
+            { $match : { _id : categoryId } }
+        ])
     },
 
     insertCategory(category){
@@ -22,7 +25,12 @@ module.exports = {
     },
 
     updateCategoryById(categoryId, category){
-        return model.findByIdAndUpdate(categoryId, category)
+        return model.updateOne(
+            { _id: categoryId },
+            [{
+                $set : category
+            }]
+        )
     },
 
     deleteCategoryById(categoryId){

@@ -15,17 +15,17 @@ const track = mongoose.Schema({
     },
 
     category: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: Category,
         require: true
     },
 
     album: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: Album,
         require: true
     }
 
-})
+},{ versionKey: false })
 
 module.exports = mongoose.model('Track', track)

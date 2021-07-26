@@ -10,10 +10,12 @@ const category = mongoose.Schema({
     description: {
         type: String,
         require: true
-    }
+    },
 
-}, { 
-    timestamps: true 
-})
+    createdDate: Date,
+
+    updatedDate: Date
+
+},{ versionKey: false })
 
 module.exports = mongoose.model('Category', category)

@@ -1,26 +1,25 @@
 const mongoose = require('mongoose')
 
-const album = mongoose.Schema({
-    
+const user = mongoose.Schema({
+
     name: {
         type: String,
         require: true
     },
 
-    description: {
+    email: {
+        type: String,
+        unique: true,
+        require: true
+    },
+
+    password: {
         type: String,
         require: true
     },
 
-    showNbTracks: {
-        type: Number,
-        require: true
-    },
-
-    createdDate: Date,
-
-    updatedDate: Date,
+    registrationDate: Date
 
 },{ versionKey: false })
 
-module.exports = mongoose.model('Album', album)
+module.exports = mongoose.model('User', user)

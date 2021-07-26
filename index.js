@@ -19,8 +19,8 @@ databaseConnection()
 // middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(logger)
-app.use(trimRequest)
+app.use(logger) // for tracking
+app.use(trimRequest) // for security reasons
 
 app.use('/api', apis)
 app.use('*', (_, res) => { res.sendStatus(404) })

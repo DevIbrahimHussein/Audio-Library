@@ -1,46 +1,59 @@
+const { required } = require('joi')
 const { createModel, allTrack, insertTrack, updateTrackById, deleteTrackById, findById } = require('../service/tracks.service')
-const catchAsync = require('../utils/errors')
-const { validateTrackRequest } = require('../utils/validation')
+const { convertToObject } = require('../utils/helpers')
 
+exports.listTracks = async (req, res, next) => {
 
-exports.listTracks = catchAsync(async (req, res, next) => {
-
-    req.data = await allTrack()
-    next()
-
-})
-
-exports.getTrack = catchAsync(async (req, _, next) => {
-
-    req.data = await findById(req.params.songId)
-    next()
-
-})
-
-exports.addTrack = catchAsync(async (req, res, next) => {
-
-    const { errors, isValid } = validateTrackRequest(req.body)
-
-    if(!isValid){
-        return res.status(404).json(errors)
+    try {
+        const data = await allTrack()
+        return res.status(500).json(data)
+    } catch (e) {
+        return res.status(500).json({ msg: e })
     }
 
-    const model = createModel(req.body)
-    req.data = await insertTrack(model)
-    next()
+}
 
-})
+exports.getTrack = async (req, _, next) => {
 
-exports.updateTrack = catchAsync(async (req, _, next) => {
+    try {
+        const data = await findById(convertToObject(req.params.songId))
+        return res.json(data)
+    } catch(e) {
+        return res.status(500).json({ msg: e })
+    }
 
-    req.data = await updateTrackById(req.params.songId, req.body)
-    next()
+}
 
-})
+exports.addTrack = async (req, res, next) => {
 
-exports.deleteTrack = catchAsync(async (req, _, next) => {
+    try {
+        const model = createModel(req.body)
+        const data = await insertTrack(model)
+        return res.json(data)
+    } catch(e) {
+        return res.status(500).json({ msg: e })
+    }
+
+}
+
+exports.updateTrack = async (req, _, next) => {
+
+    try {
+        const data = await updateTrackById(convertToObject(req.params.songId), req.body)
+        return res.json(data)
+    } catch (e){
+        return res.status(500).json({ msg: e })
+    }
+
+}
+
+exports.deleteTrack = async (req, _, next) => {
     
-    req.data = await deleteTrackById(req.params.songId)
-    next()
+    try {
+        const data = await deleteTrackById(convertToObject(req.params.songId))
+        return res.json(data)
+    } catch(e) {
+        return res.status(500).json({ msg: e })
+    }
 
-})
+}

@@ -1,47 +1,69 @@
 const { allCategories, insertCategory, createModel, updateCategoryById, deleteCategoryById, findById } = require('../service/category.service')
-const catchAsync = require('../utils/errors')
-const { validateCategoryRequest } = require('../utils/validation')
+const { convertToObject } = require('../utils/helpers')
 
+exports.listCategories = async (req, res, next) => {
 
-exports.listCategories = catchAsync(async (req, _, next) => {
+    try {
 
-    req.data = await allCategories()
-    next()
+        const data = await allCategories()
+        return res.json(data)
 
-})
+    } catch(e) {
+        return res.status(500).json({ msg: e })
+    }
+    
+}
 
-exports.getCategory = catchAsync(async (req, _, next) => {
+exports.getCategory = async (req, res, next) => {
 
-    req.data = await findById(req.params.categoryId)
-    next()
+    try {
 
-})
+        const data = await findById(convertToObject(req.params.categoryId))
+        return res.json(data)
 
-exports.addCategory = catchAsync(async (req, res, next) => {
-
-    const { errors, isValid } = validateCategoryRequest(req.body)
-
-    if(!isValid){
-        return res.status(404).json(errors)
+    } catch(e) {
+        return res.status(500).json({ msg: e })
     }
 
-    const model = createModel(req.body)
-    req.data = await insertCategory(model)
-    next()
+}
 
-})
+exports.addCategory = async (req, res, next) => {
 
-exports.updateCategory = catchAsync(async (req, res, next) => {
+    try {
 
-    req.data = await updateCategoryById(req.params.categoryId, req.body)
-    next()
+        const model = createModel(req.body)
+        const data = await insertCategory(model)
+        return res.json(data)
 
-})
+    } catch(e){
+        return res.status(500).json({ msg: e })
+    }
 
-exports.deleteCategory = catchAsync(async (req, res, next) => {
+}
 
-    req.data = await deleteCategoryById(req.params.categoryId)
-    next()
+exports.updateCategory = async (req, res, next) => {
 
-})
+    try{
+
+        const data = await updateCategoryById(convertToObject(req.params.categoryId), req.body)
+        return res.json(data)
+
+    } catch(e){
+        res.status(500).json({ msg: e })
+    }
+
+}
+
+exports.deleteCategory = async (req, res, next) => {
+
+    try {
+
+        const data = await deleteCategoryById(convertToObject(req.params.categoryId))
+        return res.json(data)
+
+    } catch(e){
+        return res.status(500).json({ msg: e })
+    }
+
+}
 

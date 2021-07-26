@@ -1,5 +1,5 @@
 const model = require('../model/track.model')
-var mongoose = require('mongoose')
+const { convertToObject } = require('../utils/helpers')
 
 module.exports = {
 
@@ -7,8 +7,8 @@ module.exports = {
         return new model({
             name: reqBody.name,
             singer: reqBody.singer,
-            category: mongoose.Types.ObjectId(reqBody.category),
-            album: mongoose.Types.ObjectId(reqBody.album)
+            category: convertToObject(reqBody.category),
+            album: convertToObject(reqBody.album)
         })
     },
 

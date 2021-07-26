@@ -1,42 +1,39 @@
 const express = require('express')
+const router = express.Router()
 const { listAlbums, addAlbum, updateAlbum, deleteAlbum, getAlbum } = require('./controllers/album.controller')
 const { addCategory, listCategories, updateCategory, deleteCategory, getCategory } = require('./controllers/category.controller')
 const { addTrack, listTracks, updateTrack, deleteTrack, getTrack } = require('./controllers/track.controller')
-const router = express.Router()
+const { signup } = require('./controllers/user.controller')
 
 const { dataHandler } = require('./middleware/route-level.middleware')
+const { validateAlbumRequest } = require('./middleware/validations.middleware')
 // ========================================================================================================================
 
 router.post('/category',
     addCategory,
-    dataHandler
 )
 
 router.get('/categories',
     listCategories,
-    dataHandler
 )
 
 router.get('/category/:categoryId',
     getCategory,
-    dataHandler
 )
 
 router.put('/category/:categoryId',
     updateCategory,
-    dataHandler
 )
 
 router.delete('/category/:categoryId',
     deleteCategory,
-    dataHandler
 )
 
 // ========================================================================================================================
 
 router.post('/album',
-    addAlbum,
-    dataHandler
+    validateAlbumRequest,
+    addAlbum
 )
 
 router.get('/albums',
@@ -84,6 +81,14 @@ router.put('/song/:songId',
 router.delete('/song/:songId',
     deleteTrack,
     dataHandler
+)
+
+//====================================================================
+
+router.post('/login')
+
+router.post('/signup',
+    signup
 )
 
 module.exports = router 
