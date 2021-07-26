@@ -1,32 +1,32 @@
 const express = require('express')
 const router = express.Router()
+
 const { listAlbums, addAlbum, updateAlbum, deleteAlbum, getAlbum } = require('./controllers/album.controller')
 const { addCategory, listCategories, updateCategory, deleteCategory, getCategory } = require('./controllers/category.controller')
 const { addTrack, listTracks, updateTrack, deleteTrack, getTrack } = require('./controllers/track.controller')
-const { signup } = require('./controllers/user.controller')
-
-const { dataHandler } = require('./middleware/route-level.middleware')
-const { validateAlbumRequest } = require('./middleware/validations.middleware')
+const { signup, login } = require('./controllers/user.controller')
+const { validateAlbumRequest, validateCategoryRequest, validateTrackRequest, validateRegistrationRequest, validateLoginRequest } = require('./middleware/validations.middleware')
 // ========================================================================================================================
 
 router.post('/category',
-    addCategory,
+    validateCategoryRequest,
+    addCategory
 )
 
 router.get('/categories',
-    listCategories,
+    listCategories
 )
 
 router.get('/category/:categoryId',
-    getCategory,
+    getCategory
 )
 
 router.put('/category/:categoryId',
-    updateCategory,
+    updateCategory
 )
 
 router.delete('/category/:categoryId',
-    deleteCategory,
+    deleteCategory
 )
 
 // ========================================================================================================================
@@ -37,57 +37,53 @@ router.post('/album',
 )
 
 router.get('/albums',
-    listAlbums,
-    dataHandler
+    listAlbums
 )
 
 router.get('/album/:albumId',
-    getAlbum,
-    dataHandler
+    getAlbum
 )
 
 router.put('/album/:albumId',
-    updateAlbum,
-    dataHandler
+    updateAlbum
 )
 
 router.delete('/album/:albumId',
-    deleteAlbum,
-    dataHandler
+    deleteAlbum
 )
 
 // ========================================================================================================================
 
 router.post('/song',
-    addTrack,
-    dataHandler
+    validateTrackRequest,
+    addTrack
 )
 
 router.get('/songs',
-    listTracks,
-    dataHandler
+    listTracks
 )
 
 router.get('/song/:songId',
-    getTrack,
-    dataHandler
+    getTrack
 )
 
 router.put('/song/:songId',
-    updateTrack,
-    dataHandler
+    updateTrack
 )
 
 router.delete('/song/:songId',
-    deleteTrack,
-    dataHandler
+    deleteTrack
 )
 
 //====================================================================
 
-router.post('/login')
+router.post('/login',
+    validateLoginRequest,
+    login
+)
 
 router.post('/signup',
+    validateRegistrationRequest,
     signup
 )
 
