@@ -68,8 +68,8 @@ exports.deleteAlbum = async (req, res) => {
         let filter = {}
         filter.album = req.params.albumId
         const isRelatedToSong = await songsService.allTrack(filter)
-
-        if(isRelatedToSong) return res.status(400).json({ msg: 'You cannot delete this album since there is songs related to it' })
+        
+        if(!isRelatedToSong) return res.status(400).json({ msg: 'You cannot delete this album since there is songs related to it' })
 
         const data = await deleteAlbumById(req.params.albumId)
         return res.json(data)

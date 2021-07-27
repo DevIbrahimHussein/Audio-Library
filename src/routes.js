@@ -12,7 +12,7 @@ const { validateAlbumRequest, validateCategoryRequest, validateTrackRequest, val
 router.get('/', (req, res) => { res.send("Your Route is working") })
 
 router.post('/category',
-    //validateCategoryRequest,
+    validateCategoryRequest,
     addCategory
 )
 
@@ -58,7 +58,7 @@ router.delete('/album/:albumId',
 // ========================================================================================================================
 
 router.post('/song',
-    //validateTrackRequest,
+    validateTrackRequest,
     addTrack
 )
 
@@ -90,12 +90,12 @@ router.get('/users',
 )
 
 router.post('/login',
-    //validateLoginRequest,
+    validateLoginRequest,
     login
 )
 
 router.post('/signup',
-    //validateRegistrationRequest,
+    validateRegistrationRequest,
     signup
 )
 

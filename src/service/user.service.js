@@ -1,7 +1,6 @@
 const model = require('../model/user.model')
 const jwt = require('jsonwebtoken')
 const sha256 = require('sha256')
-const isEmpty = require('is-empty')
 
 module.exports = {
 

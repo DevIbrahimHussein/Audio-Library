@@ -11,8 +11,6 @@ exports.validateAlbumRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        console.log(error)
-
         if(error) return res.status(400).json(error)
 
         next()
@@ -33,8 +31,6 @@ exports.validateCategoryRequest = async(req, res, next) => {
     try {
 
         const { error } = schema.validate(req.body)
-
-        console.log(error)
 
         if(error) return res.status(400).json(error)
 
@@ -61,8 +57,6 @@ exports.validateTrackRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        console.log(error)
-
         if(error) return res.status(400).json(error)
 
         next()
@@ -85,8 +79,6 @@ exports.validateRegistrationRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        console.log(error)
-
         if(error) return res.status(400).json(error)
 
         next()
@@ -107,8 +99,6 @@ exports.validateLoginRequest = async(req, res, next) => {
     try {
 
         const { error } = schema.validate(req.body)
-
-        console.log(error)
 
         if(error) return res.status(400).json(error)
 
