@@ -12,9 +12,9 @@ module.exports = {
         })
     },
 
-    allTrack(){
+    allTrack(filter){
         return model
-        .find()
+        .find(filter)
         .populate({
             path: 'category',
             model: 'Category'

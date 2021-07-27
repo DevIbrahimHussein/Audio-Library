@@ -1,5 +1,6 @@
 const { allAlbums, insertAlbum, updateAlbumById, deleteAlbumById, createModel, findById } = require('../service/album.service')
 const { convertToObject } = require('../utils/helpers')
+const songsService = require('../service/tracks.service')
 
 exports.listAlbums = async (req, res) => {
     
@@ -49,7 +50,7 @@ exports.updateAlbum = async (req, res) => {
     try {
         
         const isExist = await findById(convertToObject(req.params.albumId))
-        if(!isExist) return res.status(400).json({ msg: 'ALbum is not exist' })
+        if(!isExist) return res.status(400).json({ msg: 'Album is not exist' })
 
         const data = await updateAlbumById(convertToObject(req.params.albumId), req.body)
         return res.json(data)
@@ -62,9 +63,15 @@ exports.updateAlbum = async (req, res) => {
 
 exports.deleteAlbum = async (req, res) => {
     try {
-        const isExist = await findById(convertToObject(req.params.albumId))
-        if(!isExist) return res.status(400).json({ msg: 'ALbum is not exist' })
+        const isAlbumExists = await findById(convertToObject(req.params.albumId))
+        if(!isAlbumExists) return res.status(400).json({ msg: 'Album is not exist' })
         
+        let filter = {}
+        filter.album = req.params.albumId
+        const isRelatedToSong = await songsService.findById(filter)
+
+        if(isRelatedToSong) return res.status(400).json({ msg: 'You cannot delete this album since there is songs related to it' })
+
         const data = await deleteAlbumById(convertToObject(req.params.albumId))
         return res.json(data)
     } catch(e) {

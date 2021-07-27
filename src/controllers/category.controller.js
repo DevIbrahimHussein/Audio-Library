@@ -44,6 +44,8 @@ exports.addCategory = async (req, res) => {
 exports.updateCategory = async (req, res) => {
 
     try{
+        const isExist = await findById(convertToObject(req.params.categoryId))
+        if(!isExist) return res.status(400).json({ msg: 'category not exist' })
 
         const data = await updateCategoryById(convertToObject(req.params.categoryId), req.body)
         return res.json(data)
@@ -57,6 +59,14 @@ exports.updateCategory = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
 
     try {
+        const isCategoryExists = await findById(convertToObject(req.params.categoryId))
+        if(!isCategoryExists) return res.status(400).json({ msg: 'category not exist' })
+
+        let filter = {}
+        filter.caegory = req.params.categoryId
+        const isRelatedToSong = await songsService.findById(filter)
+
+        if(isRelatedToSong) return res.status(400).json({ msg: 'You cannot delete this category since there is songs related to it' })
 
         const data = await deleteCategoryById(convertToObject(req.params.categoryId))
         return res.json(data)

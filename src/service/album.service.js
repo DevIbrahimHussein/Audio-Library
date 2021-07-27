@@ -28,6 +28,7 @@ module.exports = {
     },
 
     updateAlbumById(albumId, album){
+        album.updatedDate = new Date()
         return model.updateOne(
             { _id: albumId },
             [{

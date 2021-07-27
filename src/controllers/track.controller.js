@@ -4,7 +4,7 @@ const { convertToObject } = require('../utils/helpers')
 exports.listTracks = async (req, res) => {
 
     try {
-        const data = await allTrack()
+        const data = await allTrack({})
         return res.status(200).json(data)
     } catch (e) {
         return res.status(500).json({ msg: e })

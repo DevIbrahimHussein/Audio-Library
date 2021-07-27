@@ -25,6 +25,7 @@ module.exports = {
     },
 
     updateCategoryById(categoryId, category){
+        category.updatedDate = new Date()
         return model.updateOne(
             { _id: categoryId },
             [{
