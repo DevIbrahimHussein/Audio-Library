@@ -58,6 +58,12 @@ module.exports = {
 
     deleteTrackById(trackId){
         return model.findByIdAndDelete(trackId)
+    },
+
+    allTracksWithAlbumId(albumId){
+        return model.aggregate([
+            { $match : { album: albumId } }
+        ])
     }
 
 }

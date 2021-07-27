@@ -3,8 +3,9 @@ const router = express.Router()
 
 const { listAlbums, addAlbum, updateAlbum, deleteAlbum, getAlbum } = require('./controllers/album.controller')
 const { addCategory, listCategories, updateCategory, deleteCategory, getCategory } = require('./controllers/category.controller')
-const { addTrack, listTracks, updateTrack, deleteTrack, getTrack } = require('./controllers/track.controller')
+const { addTrack, listTracks, updateTrack, deleteTrack, getTrack, listTracksByAlbumId } = require('./controllers/track.controller')
 const { signup, login, listUsers } = require('./controllers/user.controller')
+const { verifyToken } = require('./middleware/auth.middleware')
 const { validateAlbumRequest, validateCategoryRequest, validateTrackRequest, validateRegistrationRequest, validateLoginRequest } = require('./middleware/validations.middleware')
 // ========================================================================================================================
 
@@ -73,6 +74,11 @@ router.put('/song/:songId',
 
 router.delete('/song/:songId',
     deleteTrack
+)
+
+router.get('/songs/:albumId',
+    verifyToken,
+    listTracksByAlbumId
 )
 
 //====================================================================

@@ -1,12 +1,11 @@
-const { required } = require('joi')
-const { createModel, allTrack, insertTrack, updateTrackById, deleteTrackById, findById } = require('../service/tracks.service')
+const { createModel, allTrack, insertTrack, updateTrackById, deleteTrackById, findById, allTracksWithAlbumId } = require('../service/tracks.service')
 const { convertToObject } = require('../utils/helpers')
 
 exports.listTracks = async (req, res, next) => {
 
     try {
         const data = await allTrack()
-        return res.status(500).json(data)
+        return res.status(200).json(data)
     } catch (e) {
         return res.status(500).json({ msg: e })
     }
@@ -53,6 +52,19 @@ exports.deleteTrack = async (req, _, next) => {
         const data = await deleteTrackById(convertToObject(req.params.songId))
         return res.json(data)
     } catch(e) {
+        return res.status(500).json({ msg: e })
+    }
+
+}
+
+exports.listTracksByAlbumId = async(req, res) => {
+
+    try {
+
+        const data = await allTracksWithAlbumId(convertToObject(req.params.albumId))
+        return res.json(data)
+
+    } catch(e){
         return res.status(500).json({ msg: e })
     }
 
