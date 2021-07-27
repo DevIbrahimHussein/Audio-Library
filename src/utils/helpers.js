@@ -17,14 +17,22 @@ module.exports = {
         return mongoose.Types.ObjectId(strId)
     },
 
-    sendEmail(){
+    sendWelcomeEmail(user){
+
         const mailOptions = {
-            from: from,
-            to: 'support@audio-library.com',  
-            subject: subject,
-            text: message,
+            from: 'support@audio-library.com',
+            to: user.email,  
+            subject: "Registration",
+            text: `Welcome ${user.name}`,
         }
-        transporter.sendMail(mailOptions)
+
+        try {
+            transporter.sendMail(mailOptions)
+        } catch(e) {
+            console.log(e)
+        }
+
+
     }
 
 }

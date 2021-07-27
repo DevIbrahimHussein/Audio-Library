@@ -1,4 +1,5 @@
 const { isUserExist, signToken, signup, allUsers, createUserModel } = require('../service/user.service')
+const { sendWelcomeEmail } = require('../utils/helpers')
 
 exports.signup = async(req, res) => {
 
@@ -14,7 +15,8 @@ exports.signup = async(req, res) => {
 
         const user = await signup(model)
 
-        console.log(user)
+        sendWelcomeEmail(user)
+
         return res.json(user)
 
     } catch(e) {
