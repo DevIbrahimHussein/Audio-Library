@@ -1,7 +1,7 @@
 const { allCategories, insertCategory, createModel, updateCategoryById, deleteCategoryById, findById } = require('../service/category.service')
 const { convertToObject } = require('../utils/helpers')
 
-exports.listCategories = async (req, res, next) => {
+exports.listCategories = async (req, res) => {
 
     try {
 
@@ -14,7 +14,7 @@ exports.listCategories = async (req, res, next) => {
     
 }
 
-exports.getCategory = async (req, res, next) => {
+exports.getCategory = async (req, res) => {
 
     try {
 
@@ -27,7 +27,7 @@ exports.getCategory = async (req, res, next) => {
 
 }
 
-exports.addCategory = async (req, res, next) => {
+exports.addCategory = async (req, res) => {
 
     try {
 
@@ -41,7 +41,7 @@ exports.addCategory = async (req, res, next) => {
 
 }
 
-exports.updateCategory = async (req, res, next) => {
+exports.updateCategory = async (req, res) => {
 
     try{
 
@@ -54,7 +54,7 @@ exports.updateCategory = async (req, res, next) => {
 
 }
 
-exports.deleteCategory = async (req, res, next) => {
+exports.deleteCategory = async (req, res) => {
 
     try {
 

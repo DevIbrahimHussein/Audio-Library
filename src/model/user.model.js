@@ -18,7 +18,10 @@ const user = mongoose.Schema({
         require: true
     },
 
-    registrationDate: Date
+    registrationDate: {
+        type: Date,
+        default: new Date()
+    }
 
 },{ versionKey: false })
 

@@ -1,7 +1,7 @@
 const { allAlbums, insertAlbum, updateAlbumById, deleteAlbumById, createModel, findById } = require('../service/album.service')
 const { convertToObject } = require('../utils/helpers')
 
-exports.listAlbums = async (req, res, next) => {
+exports.listAlbums = async (req, res) => {
     
     try {
 
@@ -15,7 +15,7 @@ exports.listAlbums = async (req, res, next) => {
 
 }
 
-exports.getAlbum = async (req, res, next) => {
+exports.getAlbum = async (req, res) => {
     
     try {
 
@@ -30,7 +30,7 @@ exports.getAlbum = async (req, res, next) => {
 
 }
 
-exports.addAlbum = async (req, res, next) => {
+exports.addAlbum = async (req, res) => {
     
     try {
         
@@ -44,9 +44,13 @@ exports.addAlbum = async (req, res, next) => {
 
 }
 
-exports.updateAlbum = async (req, res, next) => {
+exports.updateAlbum = async (req, res) => {
     
     try {
+        
+        const isExist = await findById(convertToObject(req.params.albumId))
+        if(!isExist) return res.status(400).json({ msg: 'ALbum is not exist' })
+
         const data = await updateAlbumById(convertToObject(req.params.albumId), req.body)
         return res.json(data)
     } catch(e) {
@@ -56,8 +60,11 @@ exports.updateAlbum = async (req, res, next) => {
 
 }
 
-exports.deleteAlbum = async (req, res, next) => {
+exports.deleteAlbum = async (req, res) => {
     try {
+        const isExist = await findById(convertToObject(req.params.albumId))
+        if(!isExist) return res.status(400).json({ msg: 'ALbum is not exist' })
+        
         const data = await deleteAlbumById(convertToObject(req.params.albumId))
         return res.json(data)
     } catch(e) {

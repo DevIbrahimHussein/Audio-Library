@@ -9,6 +9,8 @@ const { verifyToken } = require('./middleware/auth.middleware')
 const { validateAlbumRequest, validateCategoryRequest, validateTrackRequest, validateRegistrationRequest, validateLoginRequest } = require('./middleware/validations.middleware')
 // ========================================================================================================================
 
+router.get('/', (req, res) => { res.send("Your Route is working") })
+
 router.post('/category',
     //validateCategoryRequest,
     addCategory

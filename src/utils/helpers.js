@@ -20,7 +20,7 @@ module.exports = {
     sendEmail(){
         const mailOptions = {
             from: from,
-            to: 'support@bobshop.com',  
+            to: 'support@audio-library.com',  
             subject: subject,
             text: message,
         }

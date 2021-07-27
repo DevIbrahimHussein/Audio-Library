@@ -60,10 +60,8 @@ module.exports = {
         return model.findByIdAndDelete(trackId)
     },
 
-    allTracksWithAlbumId(albumId){
-        return model.aggregate([
-            { $match : { album: albumId } }
-        ])
+    allTracksWithAlbumId(filter){
+        return model.find(filter).sort({ createdDate: 1 })
     }
 
 }

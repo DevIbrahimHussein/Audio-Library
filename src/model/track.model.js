@@ -24,6 +24,11 @@ const track = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: Album,
         require: true
+    },
+
+    createdDate: {
+        type: Date,
+        default: new Date()
     }
 
 },{ versionKey: false })

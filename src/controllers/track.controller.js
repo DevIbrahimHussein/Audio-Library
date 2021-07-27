@@ -1,7 +1,7 @@
 const { createModel, allTrack, insertTrack, updateTrackById, deleteTrackById, findById, allTracksWithAlbumId } = require('../service/tracks.service')
 const { convertToObject } = require('../utils/helpers')
 
-exports.listTracks = async (req, res, next) => {
+exports.listTracks = async (req, res) => {
 
     try {
         const data = await allTrack()
@@ -12,7 +12,7 @@ exports.listTracks = async (req, res, next) => {
 
 }
 
-exports.getTrack = async (req, _, next) => {
+exports.getTrack = async (req, res) => {
 
     try {
         const data = await findById(convertToObject(req.params.songId))
@@ -23,7 +23,7 @@ exports.getTrack = async (req, _, next) => {
 
 }
 
-exports.addTrack = async (req, res, next) => {
+exports.addTrack = async (req, res) => {
 
     try {
         const model = createModel(req.body)
@@ -35,7 +35,7 @@ exports.addTrack = async (req, res, next) => {
 
 }
 
-exports.updateTrack = async (req, _, next) => {
+exports.updateTrack = async (req, res) => {
 
     try {
         const data = await updateTrackById(convertToObject(req.params.songId), req.body)
@@ -46,7 +46,7 @@ exports.updateTrack = async (req, _, next) => {
 
 }
 
-exports.deleteTrack = async (req, _, next) => {
+exports.deleteTrack = async (req, res) => {
     
     try {
         const data = await deleteTrackById(convertToObject(req.params.songId))
@@ -60,8 +60,10 @@ exports.deleteTrack = async (req, _, next) => {
 exports.listTracksByAlbumId = async(req, res) => {
 
     try {
-
-        const data = await allTracksWithAlbumId(convertToObject(req.params.albumId))
+        let filter = {}
+        filter.album = req.params.albumId
+        if(req.query.category) filter.category = req.query.category
+        const data = await allTracksWithAlbumId(filter)
         return res.json(data)
 
     } catch(e){
