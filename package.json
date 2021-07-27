@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/DevIbrahimHussein/Audio-Library#readme",
   "dependencies": {
+    "@hapi/joi": "^15.0.3",
     "express": "^4.17.1",
     "is-empty": "^1.2.0",
     "jest": "^27.0.6",

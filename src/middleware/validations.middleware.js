@@ -1,23 +1,24 @@
-const Joi = require('joi')
+const Joi = require('@hapi/joi');
 
 exports.validateAlbumRequest = async(req, res, next) => {
 
-    const Schema = Joi.object().keys({
-        name: Joi.string().required(),
-        description: Joi.string().required()
-    })
+    try {
 
-    Joi.validate(req.data, Schema, (err, value) => {
-
-        if(err) return res.status(400).json({
-            status: 'error',
-            message: 'Invalid request data',
-            data: req.data
+        const Schema = Joi.object().keys({
+            name: Joi.string().required(),
+            description: Joi.string().required()
         })
+    
+        const {error} = Joi.validate(req.data, Schema)
+        console.log(error)
+
+        if(!error) return res.status(400).json(error)
 
         next()
 
-    })
+    } catch(e){
+        return res.status(500).json({ msg: e })
+    }
 
 }
 
@@ -28,7 +29,7 @@ exports.validateCategoryRequest = async(req, res, next) => {
         description: Joi.string().required()
     })
 
-    Joi.validate(req.data, Schema, (err, value) => {
+    Schema.validate(req.data, (err, value) => {
 
         if(err) return res.status(400).json({
             status: 'error',
@@ -49,7 +50,7 @@ exports.validateTrackRequest = async(req, res, next) => {
         description: Joi.string().required()
     })
 
-    Joi.validate(req.data, Schema, (err, value) => {
+    Schema.validate(req.data, Schema, (err, value) => {
 
         if(err) return res.status(400).json({
             status: 'error',
@@ -71,7 +72,7 @@ exports.validateRegistrationRequest = async(req, res, next) => {
         password: Joi.string().min(6).alphanum().required()
     })
 
-    Joi.validate(req.data, Schema, (err, value) => {
+    Schema.validate(req.body, (err, value) => {
 
         if(err) return res.status(400).json({
             status: 'error',
@@ -82,6 +83,7 @@ exports.validateRegistrationRequest = async(req, res, next) => {
         next()
 
     })
+    
 
 }
 
@@ -92,7 +94,7 @@ exports.validateLoginRequest = async(req, res, next) => {
         password: Joi.string().required()
     })
 
-    Joi.validate(req.data, Schema, (err, val) => {
+    Schema.validate(req.data, (err, val) => {
         
         if(err) return res.status(400).json({
             status: 'error',

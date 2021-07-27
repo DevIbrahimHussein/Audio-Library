@@ -4,12 +4,12 @@ const router = express.Router()
 const { listAlbums, addAlbum, updateAlbum, deleteAlbum, getAlbum } = require('./controllers/album.controller')
 const { addCategory, listCategories, updateCategory, deleteCategory, getCategory } = require('./controllers/category.controller')
 const { addTrack, listTracks, updateTrack, deleteTrack, getTrack } = require('./controllers/track.controller')
-const { signup, login } = require('./controllers/user.controller')
+const { signup, login, listUsers } = require('./controllers/user.controller')
 const { validateAlbumRequest, validateCategoryRequest, validateTrackRequest, validateRegistrationRequest, validateLoginRequest } = require('./middleware/validations.middleware')
 // ========================================================================================================================
 
 router.post('/category',
-    validateCategoryRequest,
+    //validateCategoryRequest,
     addCategory
 )
 
@@ -32,7 +32,7 @@ router.delete('/category/:categoryId',
 // ========================================================================================================================
 
 router.post('/album',
-    validateAlbumRequest,
+    //validateAlbumRequest,
     addAlbum
 )
 
@@ -55,7 +55,7 @@ router.delete('/album/:albumId',
 // ========================================================================================================================
 
 router.post('/song',
-    validateTrackRequest,
+    //validateTrackRequest,
     addTrack
 )
 
@@ -77,13 +77,17 @@ router.delete('/song/:songId',
 
 //====================================================================
 
+router.get('/users',
+    listUsers
+)
+
 router.post('/login',
-    validateLoginRequest,
+    //validateLoginRequest,
     login
 )
 
 router.post('/signup',
-    validateRegistrationRequest,
+    //validateRegistrationRequest,
     signup
 )
 

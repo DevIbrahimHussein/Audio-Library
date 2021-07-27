@@ -14,7 +14,7 @@ module.exports = {
             email: data.email,
             password: hashedPassword
         })
-        
+
     },
 
     signup(user){
@@ -43,14 +43,14 @@ module.exports = {
 
     isUserExist(data){
 
-        const user = model.findOne({
+        return model.findOne({
             email: data.email
         })
+        
+    },
 
-        return {
-            isExist: isEmpty(user)
-        }
-
+    allUsers(){
+        return model.find()
     }
 
 }

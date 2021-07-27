@@ -1,16 +1,21 @@
-const { isUserExist, signToken, signup } = require('../service/user.service')
+const { isUserExist, signToken, signup, allUsers, createUserModel } = require('../service/user.service')
 
 exports.signup = async(req, res) => {
 
     try {
 
-        const user = signup(req.body)
-
-        if(!user) return res.status(400).send({
-            'msg': 'failed'
-        })
+        const model = await createUserModel(req.body)
         
-        return res.end()
+        const userExist = await isUserExist(model)
+
+        if(userExist) {
+            return res.status(400).send({'msg': 'User already exists'})
+        }
+
+        const user = await signup(model)
+
+        console.log(user)
+        return res.json(user)
 
     } catch(e) {
         return res.status(500).send(e)
@@ -18,11 +23,11 @@ exports.signup = async(req, res) => {
 
 }
 
-exports.login = async(req, res, next) => {
+exports.login = async(req, res) => {
 
     try {
 
-        const isExist = isUserExist(req.body)
+        const isExist = await isUserExist(req.body)
 
         if(!isExist)
             return res.status(400).json({
@@ -31,10 +36,22 @@ exports.login = async(req, res, next) => {
         
         const token = signToken(req.body)
 
-        req.data = token
+        return res.json({Bearer_token: token})
+        
 
     } catch(e){
         return res.status(500).send(e)
+    }
+
+}
+
+exports.listUsers = async(req, res) => {
+
+    try {
+        const data = await allUsers()
+        return res.json(data)
+    } catch(e) {
+        return res.status(500).json({ msg: e })
     }
 
 }
