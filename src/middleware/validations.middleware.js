@@ -1,18 +1,19 @@
-const Joi = require('@hapi/joi');
+const Joi = require('joi')
 
 exports.validateAlbumRequest = async(req, res, next) => {
 
+    const schema = Joi.object({
+        name: Joi.string().required(),
+        description: Joi.string().required()
+    })
+
     try {
 
-        const Schema = Joi.object().keys({
-            name: Joi.string().required(),
-            description: Joi.string().required()
-        })
-    
-        const {error} = Joi.validate(req.data, Schema)
+        const { error } = schema.validate(req.body)
+
         console.log(error)
 
-        if(!error) return res.status(400).json(error)
+        if(error) return res.status(400).json(error)
 
         next()
 
@@ -24,86 +25,97 @@ exports.validateAlbumRequest = async(req, res, next) => {
 
 exports.validateCategoryRequest = async(req, res, next) => {
 
-    const Schema = Joi.object().keys({
+    const schema = Joi.object({
         name: Joi.string().required(),
         description: Joi.string().required()
     })
 
-    Schema.validate(req.data, (err, value) => {
+    try {
 
-        if(err) return res.status(400).json({
-            status: 'error',
-            message: 'Invalid request data',
-            data: req.data
-        })
+        const { error } = schema.validate(req.body)
+
+        console.log(error)
+
+        if(error) return res.status(400).json(error)
 
         next()
 
-    })
+    } catch(e){
+        return res.status(500).json({ msg: e })
+    }
+
+    
 
 }
 
 exports.validateTrackRequest = async(req, res, next) => {
 
-    const Schema = Joi.object().keys({
+    const schema = Joi.object({
         name: Joi.string().required(),
-        description: Joi.string().required()
+        singer: Joi.string().required(),
+        category: Joi.string().required(),
+        album: Joi.string().required()
     })
 
-    Schema.validate(req.data, Schema, (err, value) => {
+    try {
 
-        if(err) return res.status(400).json({
-            status: 'error',
-            message: 'Invalid request data',
-            data: req.data
-        })
+        const { error } = schema.validate(req.body)
+
+        console.log(error)
+
+        if(error) return res.status(400).json(error)
 
         next()
 
-    })
+    } catch(e){
+        return res.status(500).json({ msg: e })
+    }
 
 }
 
 exports.validateRegistrationRequest = async(req, res, next) => {
 
-    const Schema = Joi.object().keys({
+    const schema = Joi.object({
         name: Joi.string().required(),
-        email: Joi.string().email().required(),
-        password: Joi.string().min(6).alphanum().required()
+        email:Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        password: Joi.string().required()
     })
 
-    Schema.validate(req.body, (err, value) => {
+    try {
 
-        if(err) return res.status(400).json({
-            status: 'error',
-            message: 'Invalid request data',
-            data: req.data
-        })
+        const { error } = schema.validate(req.body)
+
+        console.log(error)
+
+        if(error) return res.status(400).json(error)
 
         next()
 
-    })
-    
+    } catch(e){
+        return res.status(500).json({ msg: e })
+    }
 
 }
 
 exports.validateLoginRequest = async(req, res, next) => {
 
-    const Schema = Joi.object().keys({
-        email: Joi.string().email().required(),
+    const schema = Joi.object({
+        email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
         password: Joi.string().required()
     })
 
-    Schema.validate(req.data, (err, val) => {
-        
-        if(err) return res.status(400).json({
-            status: 'error',
-            message: 'Invalid request data',
-            data: req.data
-        })
+    try {
+
+        const { error } = schema.validate(req.body)
+
+        console.log(error)
+
+        if(error) return res.status(400).json(error)
 
         next()
 
-    })
+    } catch(e){
+        return res.status(500).json({ msg: e })
+    }
 
 }

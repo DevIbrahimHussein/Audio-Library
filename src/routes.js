@@ -35,7 +35,7 @@ router.delete('/category/:categoryId',
 // ========================================================================================================================
 
 router.post('/album',
-    //validateAlbumRequest,
+    validateAlbumRequest,
     addAlbum
 )
 

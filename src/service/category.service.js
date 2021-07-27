@@ -1,4 +1,5 @@
 const model = require('../model/category.model')
+const { convertToObject } = require('../utils/helpers')
 
 module.exports = {
 
@@ -14,7 +15,7 @@ module.exports = {
     },
 
     findById(categoryId){
-
+        categoryId = convertToObject(categoryId)
         return model.aggregate([
             { $match : { _id : categoryId } }
         ])
@@ -26,6 +27,7 @@ module.exports = {
 
     updateCategoryById(categoryId, category){
         category.updatedDate = new Date()
+        categoryId = convertToObject(categoryId)
         return model.updateOne(
             { _id: categoryId },
             [{

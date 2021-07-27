@@ -15,7 +15,7 @@ exports.listTracks = async (req, res) => {
 exports.getTrack = async (req, res) => {
 
     try {
-        const data = await findById(convertToObject(req.params.songId))
+        const data = await findById(req.params.songId)
         return res.json(data)
     } catch(e) {
         return res.status(500).json({ msg: e })
@@ -38,7 +38,7 @@ exports.addTrack = async (req, res) => {
 exports.updateTrack = async (req, res) => {
 
     try {
-        const data = await updateTrackById(convertToObject(req.params.songId), req.body)
+        const data = await updateTrackById(req.params.songId, req.body)
         return res.json(data)
     } catch (e){
         return res.status(500).json({ msg: e })
@@ -49,7 +49,7 @@ exports.updateTrack = async (req, res) => {
 exports.deleteTrack = async (req, res) => {
     
     try {
-        const data = await deleteTrackById(convertToObject(req.params.songId))
+        const data = await deleteTrackById(req.params.songId)
         return res.json(data)
     } catch(e) {
         return res.status(500).json({ msg: e })
