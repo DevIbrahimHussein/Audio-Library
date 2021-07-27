@@ -32,6 +32,7 @@
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.3",
+    "nodemailer": "^6.6.3",
     "nodemon": "^2.0.12",
     "sha256": "^0.2.0",
     "trim-request": "^1.0.6",
