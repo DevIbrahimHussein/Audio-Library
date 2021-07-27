@@ -23,7 +23,7 @@ app.use(logger) // for tracking
 app.use(trimRequest) // for security reasons
 
 app.use('/api', apis)
-app.use('*', (_, res) => { res.sendStatus(404) })
+app.use('*', (_, res) => { res.status(404).json({ msg: 'API End Point doesn\'t exist' }) })
 
 app.listen(
   process.env.PORT,
