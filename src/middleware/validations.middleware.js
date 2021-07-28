@@ -4,8 +4,7 @@ exports.validateAlbumRequest = async(req, res, next) => {
 
     const schema = Joi.object({
         name: Joi.string().required(),
-        description: Joi.string().required(),
-        showNbTracks: Joi.string().required()
+        description: Joi.string().required()
     })
 
     try {

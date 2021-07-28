@@ -1,42 +1,50 @@
 const model = require('../model/album.model')
 const { convertToObject } = require('../utils/helpers')
-
+const tracks = require('../model/track.model')
 module.exports = {
 
-    createModel(reqBody){
+    createModel(reqBody) {
         return new model({
             name: reqBody.name,
-            description: reqBody.description,
-            showNbTracks: reqBody.showNbTracks
+            description: reqBody.description
         })
     },
 
-    allAlbums(){
+    allAlbums() {
         return model.aggregate([
-            { $sort: { createdDate: -1 } }
+            { $sort: { createdDate: -1 } },
+            {
+                $lookup: {
+                    from: "tracks",
+                    let: { album: "$_id" },
+                    pipeline: [{ $match: { $expr: { $eq: ["$$album", "$album"] } } }],
+                    as: "track_count"
+                }
+            },
+            { $addFields: { showNbTracks: { $size: "$track_count" } } }
         ])
     },
 
-    findById(albumId){
+    findById(albumId) {
         return model.findById(albumId)
     },
 
-    insertAlbum(album){
+    insertAlbum(album) {
         return album.save()
     },
 
-    updateAlbumById(albumId, album){
+    updateAlbumById(albumId, album) {
         album.updatedDate = new Date()
         albumId = convertToObject(albumId)
         return model.updateOne(
             { _id: albumId },
             [{
-                $set : album
+                $set: album
             }]
         )
     },
 
-    deleteAlbumById(albumId){
+    deleteAlbumById(albumId) {
         return model.findByIdAndDelete(albumId)
     }
 
