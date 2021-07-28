@@ -1,4 +1,4 @@
-const { isUserExist, signToken, signup, allUsers, createUserModel } = require('../service/user.service')
+const { isUserExist, signToken, signup, allUsers, createUserModel, deleteUser } = require('../service/user.service')
 const { sendWelcomeEmail } = require('../utils/helpers')
 
 exports.signup = async(req, res) => {
@@ -8,6 +8,8 @@ exports.signup = async(req, res) => {
         const model = await createUserModel(req.body)
         
         const userExist = await isUserExist(model)
+
+        console.log(userExist)
 
         if(userExist) {
             return res.status(400).send({'msg': 'User already exists'})
@@ -53,6 +55,17 @@ exports.listUsers = async(req, res) => {
         const data = await allUsers()
         return res.json(data)
     } catch(e) {
+        return res.status(500).json({ msg: e })
+    }
+
+}
+
+exports.deleteUser = async(req, res) => {
+
+    try {
+        const data = await deleteUser(req.params.userId)
+        return res.status(200).json({ msg: data })
+    } catch (e){
         return res.status(500).json({ msg: e })
     }
 

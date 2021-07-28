@@ -1,6 +1,7 @@
 const model = require('../model/user.model')
 const jwt = require('jsonwebtoken')
 const sha256 = require('sha256')
+const { deleteUser } = require('../controllers/user.controller')
 
 module.exports = {
 
@@ -50,6 +51,10 @@ module.exports = {
 
     allUsers(){
         return model.find()
+    },
+
+    deleteUser(userId){
+        return model.findByIdAndDelete(userId)
     }
 
 }
