@@ -40,8 +40,6 @@ exports.validateCategoryRequest = async (req, res, next) => {
         return res.status(500).json({ msg: e })
     }
 
-
-
 }
 
 exports.validateTrackRequest = async (req, res, next) => {
