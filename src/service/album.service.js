@@ -25,7 +25,19 @@ module.exports = {
     },
 
     findById(albumId) {
-        return model.findById(albumId)
+        albumId = convertToObject(albumId)
+        return model.aggregate([
+            { $match: { _id: albumId } },
+            {
+                $lookup: {  
+                    from: "tracks",
+                    let: { album: "$_id" },
+                    pipeline: [{ $match: { $expr: { $eq: ["$$album", "$album"] } } }],
+                    as: "tracks"
+                }
+            },
+            { $addFields: { showNbTracks: { $size: "$tracks" } } }
+        ])
     },
 
     insertAlbum(album) {

@@ -50,7 +50,9 @@ module.exports = {
     },
 
     allUsers(){
-        return model.find()
+        return model.aggregate([
+            { $project: { password: 0 } }
+        ])
     },
 
     deleteUser(userId){
