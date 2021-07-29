@@ -11,7 +11,7 @@ exports.validateAlbumRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if(error) return res.status(400).json(error)
+        if(error) return res.status(400).json({ msg: error.details[0].message })
 
         next()
 
@@ -32,7 +32,7 @@ exports.validateCategoryRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if(error) return res.status(400).json(error)
+        if(error) return res.status(400).json({ msg: error.details[0].message })
 
         next()
 
@@ -57,7 +57,7 @@ exports.validateTrackRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if(error) return res.status(400).json(error)
+        if(error) return res.status(400).json({ msg: error.details[0].message })
 
         next()
 
@@ -79,7 +79,7 @@ exports.validateRegistrationRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if(error) return res.status(400).json(error)
+        if(error) return res.status(400).json({ msg: error.details[0].message })
 
         next()
 
@@ -100,7 +100,7 @@ exports.validateLoginRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if(error) return res.status(400).json(error)
+        if(error) return res.status(400).json({ msg: error.details[0].message })
 
         next()
 

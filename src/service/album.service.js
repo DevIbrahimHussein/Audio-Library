@@ -1,6 +1,5 @@
 const model = require('../model/album.model')
 const { convertToObject } = require('../utils/helpers')
-const tracks = require('../model/track.model')
 module.exports = {
 
     createModel(reqBody) {
@@ -17,11 +16,11 @@ module.exports = {
                 $lookup: {
                     from: "tracks",
                     let: { album: "$_id" },
-                    pipeline: [{ $match: { $expr: { $eq: ["$$album", "$album"] } } }],
-                    as: "track_count"
+                    pipeline: [{ $match: { $expr: { $eq: ["$album", "$album"] } } }],
+                    as: "tracks"
                 }
             },
-            { $addFields: { showNbTracks: { $size: "$track_count" } } }
+            { $addFields: { showNbTracks: { $size: "$tracks" } } }
         ])
     },
 
