@@ -16,7 +16,7 @@ module.exports = {
                 $lookup: {
                     from: "tracks",
                     let: { album: "$_id" },
-                    pipeline: [{ $match: { $expr: { $eq: ["$album", "$album"] } } }],
+                    pipeline: [{ $match: { $expr: { $eq: ["$$album", "$album"] } } }],
                     as: "tracks"
                 }
             },
