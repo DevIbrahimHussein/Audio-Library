@@ -1,7 +1,8 @@
+require('dotenv').config()
 const mongoose = require("mongoose")
 const nodemailer = require('nodemailer')
-const user = 'ibrahimhussein19.98@gmail.com'
-const pass = 'gibshniirjtiqfwx'
+const user = process.env.AUTH_GMAIL_USER
+const pass = process.env.AUTH_GMAIL_PASSWORD
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -31,7 +32,6 @@ module.exports = {
         } catch(e) {
             console.log(e)
         }
-
 
     }
 
