@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const album = mongoose.Schema({
-    
+
     name: {
         type: String,
         require: true
@@ -24,6 +24,6 @@ const album = mongoose.Schema({
 
     updatedDate: Date,
 
-},{ versionKey: false })
+}, { versionKey: false })
 
 module.exports = mongoose.model('Album', album)

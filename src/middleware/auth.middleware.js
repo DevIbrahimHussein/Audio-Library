@@ -1,7 +1,7 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
-exports.verifyToken = async(req, res, next) => {
+exports.verifyToken = async (req, res, next) => {
 
     const token = req.body.token || req.query.token || req.headers["x-access-token"]
 

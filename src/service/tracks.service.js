@@ -3,7 +3,7 @@ const { convertToObject } = require('../utils/helpers')
 
 module.exports = {
 
-    createModel(reqBody){
+    createModel(reqBody) {
         return new model({
             name: reqBody.name,
             singer: reqBody.singer,
@@ -12,55 +12,55 @@ module.exports = {
         })
     },
 
-    allTrack(filter){
+    allTrack(filter) {
         return model
-        .find(filter)
-        .populate({
-            path: 'category',
-            model: 'Category'
-        })
-        .populate({
-            path: 'album',
-            model: 'Album'
-        })
+            .find(filter)
+            .populate({
+                path: 'category',
+                model: 'Category'
+            })
+            .populate({
+                path: 'album',
+                model: 'Album'
+            })
     },
 
-    findById(trackId){
+    findById(trackId) {
         return model
-        .findById(trackId)
-        .populate({
-            path: 'category',
-            model: 'Category'
-        })
-        .populate({
-            path: 'album',
-            model: 'Album'
-        })
+            .findById(trackId)
+            .populate({
+                path: 'category',
+                model: 'Category'
+            })
+            .populate({
+                path: 'album',
+                model: 'Album'
+            })
     },
 
-    insertTrack(track){
+    insertTrack(track) {
         return track
-        .save()
+            .save()
     },
 
-    updateTrackById(trackId, track){
+    updateTrackById(trackId, track) {
         return model
-        .findByIdAndUpdate(trackId, track)
-        .populate({
-            path: 'category',
-            model: 'Category'
-        })
-        .populate({
-            path: 'album',
-            model: 'Album'
-        })
+            .findByIdAndUpdate(trackId, track)
+            .populate({
+                path: 'category',
+                model: 'Category'
+            })
+            .populate({
+                path: 'album',
+                model: 'Album'
+            })
     },
 
-    deleteTrackById(trackId){
+    deleteTrackById(trackId) {
         return model.findByIdAndDelete(trackId)
     },
 
-    allTracksWithAlbumId(filter){
+    allTracksWithAlbumId(filter) {
         return model.find(filter).sort({ createdDate: 1 })
     }
 

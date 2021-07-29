@@ -5,7 +5,7 @@ const app = express()
 
 require('dotenv').config()
 // load database
-const databaseConnection = require('./src/config/database.config') 
+const databaseConnection = require('./src/config/database.config')
 
 const apis = require('./src/routes')
 

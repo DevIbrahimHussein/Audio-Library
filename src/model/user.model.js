@@ -23,9 +23,9 @@ const user = mongoose.Schema({
         default: new Date()
     }
 
-},{ versionKey: false })
+}, { versionKey: false })
 
-user.index({name: 1, email: 1 })
+user.index({ name: 1, email: 1 })
 
 
 module.exports = mongoose.model('User', user)

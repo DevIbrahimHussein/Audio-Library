@@ -5,7 +5,7 @@ const { deleteUser } = require('../controllers/user.controller')
 
 module.exports = {
 
-    createUserModel(data){
+    createUserModel(data) {
 
         const hashedPassword = sha256(data.password)
 
@@ -17,11 +17,11 @@ module.exports = {
 
     },
 
-    signup(user){
+    signup(user) {
         return user.save()
     },
 
-    signToken(user){
+    signToken(user) {
 
         const payload = {
             id: user.id,
@@ -41,21 +41,21 @@ module.exports = {
         return token
     },
 
-    isUserExist(data){
+    isUserExist(data) {
 
         return model.findOne({
             email: data.email
         })
-        
+
     },
 
-    allUsers(){
+    allUsers() {
         return model.aggregate([
             { $project: { password: 0 } }
         ])
     },
 
-    deleteUser(userId){
+    deleteUser(userId) {
         return model.findByIdAndDelete(userId)
     }
 

@@ -3,7 +3,7 @@ const Category = require('./category.model')
 const Album = require('./album.model')
 
 const track = mongoose.Schema({
-    
+
     name: {
         type: String,
         require: true
@@ -31,6 +31,6 @@ const track = mongoose.Schema({
         default: new Date()
     }
 
-},{ versionKey: false })
+}, { versionKey: false })
 
 module.exports = mongoose.model('Track', track)

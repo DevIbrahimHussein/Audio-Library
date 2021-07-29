@@ -18,17 +18,17 @@ for more info :: https://github.com/YouneLL/trim-request
 
 require('trim-request');
 
-var all = function ( req, res, next ) {
+var all = function (req, res, next) {
 
-    if ( req.body ) {
+    if (req.body) {
         trimStringProperties(req.body);
     }
 
-    if ( req.params ) {
+    if (req.params) {
         trimStringProperties(req.params);
     }
 
-    if ( req.query ) {
+    if (req.query) {
         trimStringProperties(req.query);
     }
 
@@ -37,19 +37,19 @@ var all = function ( req, res, next ) {
 }
 
 // trim all string prpoerties of an object
-function trimStringProperties (obj) {
+function trimStringProperties(obj) {
 
     if (obj !== null && typeof obj === 'object') {
 
-        for ( var prop in obj ) {
+        for (var prop in obj) {
 
             // if the property is an object trim it too
-            if ( typeof obj[prop] === 'object' ) {
+            if (typeof obj[prop] === 'object') {
                 return trimStringProperties(obj[prop]);
-            } 
-            
+            }
+
             // if it's a string remove begin and end whitespaces
-            if ( typeof obj[prop] === 'string' ) {
+            if (typeof obj[prop] === 'string') {
                 obj[prop] = obj[prop].trim();
             }
 
@@ -61,17 +61,17 @@ function trimStringProperties (obj) {
 
 
 // trimRequest middleware: trim all request object: body, params, query
-var all = function ( req, res, next ) {
+var all = function (req, res, next) {
 
-    if ( req.body ) {
+    if (req.body) {
         trimStringProperties(req.body);
     }
 
-    if ( req.params ) {
+    if (req.params) {
         trimStringProperties(req.params);
     }
 
-    if ( req.query ) {
+    if (req.query) {
         trimStringProperties(req.query);
     }
 
@@ -80,22 +80,22 @@ var all = function ( req, res, next ) {
 }
 
 // trimBody middleware: trim only the body object
-    var body = function (req, res, next) {
-    if ( req.body ) {
+var body = function (req, res, next) {
+    if (req.body) {
         trimStringProperties(req.body);
     }
     next();
 }
 
 var param = function (req, res, next) {
-    if ( req.params ) {
+    if (req.params) {
         trimStringProperties(req.params);
     }
     next();
 }
 
 var query = function (req, res, next) {
-    if ( req.query ) {
+    if (req.query) {
         trimStringProperties(req.query);
     }
     next();

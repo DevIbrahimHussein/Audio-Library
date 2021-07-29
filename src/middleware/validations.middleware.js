@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-exports.validateAlbumRequest = async(req, res, next) => {
+exports.validateAlbumRequest = async (req, res, next) => {
 
     const schema = Joi.object({
         name: Joi.string().required(),
@@ -11,17 +11,17 @@ exports.validateAlbumRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if(error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return res.status(400).json({ msg: error.details[0].message })
 
         next()
 
-    } catch(e){
+    } catch (e) {
         return res.status(500).json({ msg: e })
     }
 
 }
 
-exports.validateCategoryRequest = async(req, res, next) => {
+exports.validateCategoryRequest = async (req, res, next) => {
 
     const schema = Joi.object({
         name: Joi.string().required(),
@@ -32,19 +32,19 @@ exports.validateCategoryRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if(error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return res.status(400).json({ msg: error.details[0].message })
 
         next()
 
-    } catch(e){
+    } catch (e) {
         return res.status(500).json({ msg: e })
     }
 
-    
+
 
 }
 
-exports.validateTrackRequest = async(req, res, next) => {
+exports.validateTrackRequest = async (req, res, next) => {
 
     const schema = Joi.object({
         name: Joi.string().required(),
@@ -57,21 +57,21 @@ exports.validateTrackRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if(error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return res.status(400).json({ msg: error.details[0].message })
 
         next()
 
-    } catch(e){
+    } catch (e) {
         return res.status(500).json({ msg: e })
     }
 
 }
 
-exports.validateRegistrationRequest = async(req, res, next) => {
+exports.validateRegistrationRequest = async (req, res, next) => {
 
     const schema = Joi.object({
         name: Joi.string().required(),
-        email:Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
         password: Joi.string().required()
     })
 
@@ -79,17 +79,17 @@ exports.validateRegistrationRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if(error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return res.status(400).json({ msg: error.details[0].message })
 
         next()
 
-    } catch(e){
+    } catch (e) {
         return res.status(500).json({ msg: e })
     }
 
 }
 
-exports.validateLoginRequest = async(req, res, next) => {
+exports.validateLoginRequest = async (req, res, next) => {
 
     const schema = Joi.object({
         email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
@@ -100,11 +100,11 @@ exports.validateLoginRequest = async(req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if(error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return res.status(400).json({ msg: error.details[0].message })
 
         next()
 
-    } catch(e){
+    } catch (e) {
         return res.status(500).json({ msg: e })
     }
 

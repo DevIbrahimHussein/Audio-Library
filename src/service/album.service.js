@@ -29,7 +29,7 @@ module.exports = {
         return model.aggregate([
             { $match: { _id: albumId } },
             {
-                $lookup: {  
+                $lookup: {
                     from: "tracks",
                     let: { album: "$_id" },
                     pipeline: [{ $match: { $expr: { $eq: ["$$album", "$album"] } } }],

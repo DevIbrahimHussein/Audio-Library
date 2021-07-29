@@ -103,4 +103,4 @@ router.delete('/user/:userId',
     deleteUser
 )
 
-module.exports = router 
+module.exports = router

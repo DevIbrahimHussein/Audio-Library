@@ -3,40 +3,40 @@ const { convertToObject } = require('../utils/helpers')
 
 module.exports = {
 
-    createModel(reqBody){
+    createModel(reqBody) {
         return new model({
             name: reqBody.name,
             description: reqBody.description,
         })
     },
 
-    allCategories(){
+    allCategories() {
         return model.find()
     },
 
-    findById(categoryId){
+    findById(categoryId) {
         categoryId = convertToObject(categoryId)
         return model.aggregate([
-            { $match : { _id : categoryId } }
+            { $match: { _id: categoryId } }
         ])
     },
 
-    insertCategory(category){
+    insertCategory(category) {
         return category.save()
     },
 
-    updateCategoryById(categoryId, category){
+    updateCategoryById(categoryId, category) {
         category.updatedDate = new Date()
         categoryId = convertToObject(categoryId)
         return model.updateOne(
             { _id: categoryId },
             [{
-                $set : category
+                $set: category
             }]
         )
     },
 
-    deleteCategoryById(categoryId){
+    deleteCategoryById(categoryId) {
         return model.findByIdAndDelete(categoryId)
     }
 

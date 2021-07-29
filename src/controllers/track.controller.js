@@ -17,7 +17,7 @@ exports.getTrack = async (req, res) => {
     try {
         const data = await findById(req.params.songId)
         return res.json(data)
-    } catch(e) {
+    } catch (e) {
         return res.status(500).json({ msg: e })
     }
 
@@ -29,7 +29,7 @@ exports.addTrack = async (req, res) => {
         const model = createModel(req.body)
         const data = await insertTrack(model)
         return res.json(data)
-    } catch(e) {
+    } catch (e) {
         return res.status(500).json({ msg: e })
     }
 
@@ -40,33 +40,33 @@ exports.updateTrack = async (req, res) => {
     try {
         const data = await updateTrackById(req.params.songId, req.body)
         return res.json(data)
-    } catch (e){
+    } catch (e) {
         return res.status(500).json({ msg: e })
     }
 
 }
 
 exports.deleteTrack = async (req, res) => {
-    
+
     try {
         const data = await deleteTrackById(req.params.songId)
         return res.json(data)
-    } catch(e) {
+    } catch (e) {
         return res.status(500).json({ msg: e })
     }
 
 }
 
-exports.listTracksByAlbumId = async(req, res) => {
+exports.listTracksByAlbumId = async (req, res) => {
 
     try {
         let filter = {}
         filter.album = req.params.albumId
-        if(req.query.category) filter.category = req.query.category
+        if (req.query.category) filter.category = req.query.category
         const data = await allTracksWithAlbumId(filter)
         return res.json(data)
 
-    } catch(e){
+    } catch (e) {
         return res.status(500).json({ msg: e })
     }
 

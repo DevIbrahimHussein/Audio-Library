@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const category = mongoose.Schema({
-    
+
     name: {
         type: String,
         require: true
@@ -19,6 +19,6 @@ const category = mongoose.Schema({
 
     updatedDate: Date
 
-},{ versionKey: false })
+}, { versionKey: false })
 
 module.exports = mongoose.model('Category', category)
