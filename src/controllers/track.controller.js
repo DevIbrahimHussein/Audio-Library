@@ -1,5 +1,4 @@
 const { createModel, allTrack, insertTrack, updateTrackById, deleteTrackById, findById, allTracksWithAlbumId } = require('../service/tracks.service')
-const { convertToObject } = require('../utils/helpers')
 
 exports.listTracks = async (req, res) => {
 
