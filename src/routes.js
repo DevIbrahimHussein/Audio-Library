@@ -9,7 +9,7 @@ const { verifyToken } = require('./middleware/auth.middleware')
 const { validateAlbumRequest, validateCategoryRequest, validateTrackRequest, validateRegistrationRequest, validateLoginRequest } = require('./middleware/validations.middleware')
 // ========================================================================================================================
 
-router.get('/', (req, res) => { res.send("Your API Route is working") })
+router.get('/ping', (req, res) => { res.send("Pong") })
 
 router.post('/category',
     validateCategoryRequest,

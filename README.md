@@ -13,6 +13,6 @@ JwtSECRET=
 
 3 - open terminal and write npm run dev to run your server
 
-4 - Try http://localhost:PORT/api/ to check if route is running
+4 - Try http://localhost:PORT/api/ping to check if route is running
 
 5 - Discover all the routes from ./src/routes.js
