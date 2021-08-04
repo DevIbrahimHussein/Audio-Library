@@ -9,6 +9,13 @@ module.exports = {
         })
     },
 
+    albumUpdateModel(reqBody){
+        return {
+            name: reqbody.name,
+            description: reqBody.description
+        }
+    },
+
     allAlbums() {
         return model.aggregate([
             { $sort: { createdDate: -1 } },
@@ -46,13 +53,8 @@ module.exports = {
 
     updateAlbumById(albumId, album) {
         album.updatedDate = new Date()
-        albumId = convertToObject(albumId)
-        return model.updateOne(
-            { _id: albumId },
-            [{
-                $set: album
-            }]
-        )
+        //albumId = convertToObject(albumId)
+        return model.findByIdAndUpdate(albumId, album)
     },
 
     deleteAlbumById(albumId) {

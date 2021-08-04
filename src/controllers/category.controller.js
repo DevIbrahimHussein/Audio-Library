@@ -46,7 +46,6 @@ exports.updateCategory = async (req, res) => {
     try {
         const isExist = await findById(req.params.categoryId)
         if (!isExist) return res.status(400).json({ msg: 'category not exist' })
-
         const data = await updateCategoryById(req.params.categoryId, req.body)
         return res.json(data)
 

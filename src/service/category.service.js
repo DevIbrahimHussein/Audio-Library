@@ -27,13 +27,8 @@ module.exports = {
 
     updateCategoryById(categoryId, category) {
         category.updatedDate = new Date()
-        categoryId = convertToObject(categoryId)
-        return model.updateOne(
-            { _id: categoryId },
-            [{
-                $set: category
-            }]
-        )
+        //categoryId = convertToObject(categoryId)
+        return model.findByIdAndUpdate(categoryId, category)
     },
 
     deleteCategoryById(categoryId) {

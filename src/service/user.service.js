@@ -55,7 +55,7 @@ module.exports = {
         ])
     },
 
-    deleteUser(userId) {
+    removeUser(userId) {
         return model.findByIdAndDelete(userId)
     }
 
