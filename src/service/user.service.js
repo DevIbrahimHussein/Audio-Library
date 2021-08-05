@@ -1,7 +1,6 @@
 const model = require('../model/user.model')
 const jwt = require('jsonwebtoken')
 const sha256 = require('sha256')
-const { deleteUser } = require('../controllers/user.controller')
 
 module.exports = {
 
@@ -24,7 +23,7 @@ module.exports = {
     signToken(user) {
 
         const payload = {
-            id: user.id,
+            id: user._id,
             password: user.password
         }
 
@@ -43,10 +42,19 @@ module.exports = {
 
     isUserExist(data) {
 
+        const hashedPassword = sha256(data.password)
+
         return model.findOne({
-            email: data.email
+            email: data.email,
+            password: hashedPassword
         })
 
+    },
+
+    isEmailExist(email){
+        return model.findOne({ 
+            email: email
+        })
     },
 
     allUsers() {
