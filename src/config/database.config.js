@@ -9,7 +9,7 @@
 */
 
 const mongoose = require('mongoose')
-const database = `mongodb+srv://${__config.mongo.user_db}:${__config.mongo.password_db}@bobshop-cluster.koemv.mongodb.net/test`
+const database = __config.mongo.databaseURL
 const options = __config.mongo.options
 
 const databaseConnection = async () => {

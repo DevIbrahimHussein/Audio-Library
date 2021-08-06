@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 module.exports = {
 
     /**
@@ -12,7 +14,7 @@ module.exports = {
     mongo: {
         user_db: process.env.DB_USER,
         password_db: process.env.DB_PASSWORD,
-        databaseURL: `mongodb+srv:${this.user_db}:${this.password_db}@bobshop-cluster.koemv.mongodb.net/test`,
+        databaseURL: `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@bobshop-cluster.koemv.mongodb.net/test?authSource=admin&replicaSet=atlas-ldh0ok-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`,
         options: {
             useNewUrlParser: true,
             useUnifiedTopology: true,
