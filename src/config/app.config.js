@@ -32,13 +32,6 @@ module.exports = {
 
     api_prefix: "api",
 
-    /**
-     * The upload folder path
-     */
-
-    upload_path: "upload/",
-
-    local_upload_path: "public/upload/",
     websiteurl: 'http://localhost:3061',
 
     pagination_limit: 10,

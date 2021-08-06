@@ -1,7 +1,7 @@
 // laod express
 const express = require('express')
 // load app
-const app = express()
+global.app = express()
 
 const http = require('http')
 
