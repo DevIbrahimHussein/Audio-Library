@@ -1,22 +1,24 @@
 const express = require('express')
 const router = express.Router()
+const validation = require('../middleware/validations.middleware')
+const controller = require('./user.controller')
 
 router.get('/users',
-listUsers
+    controller.listUsers
 )
 
 router.post('/login',
-validateLoginRequest,
-login
+    validation.validateLoginRequest,
+    controller.login
 )
 
 router.post('/signup',
-validateRegistrationRequest,
-signup
+    validation.validateRegistrationRequest,
+    controller.signup
 )
 
 router.delete('/user/:userId',
-deleteUser
+    controller.deleteUser
 )
 
 module.exports = router

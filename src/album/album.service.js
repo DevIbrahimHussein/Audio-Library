@@ -1,4 +1,4 @@
-const Model = require('../model/album.model')
+const Model = require('./album.model')
 const { convertToObject } = require('../utils/helpers')
 const songService = require('../track/track.service')
 
@@ -53,7 +53,7 @@ module.exports = {
     },
 
     async insertAlbum(body) {
-        const album = createModel(body)
+        const album = await createModel(body)
         return album.save()
     },
 

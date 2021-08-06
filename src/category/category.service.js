@@ -1,6 +1,7 @@
-const model = require('../model/category.model')
+const model = require('./category.model')
 const { convertToObject } = require('../utils/helpers')
-const songsService = require('../songs/songs.service')
+const songsService = require('../track/track.service')
+
 module.exports = {
 
     async createModel(reqBody) {
@@ -31,7 +32,7 @@ module.exports = {
         category.save()
     },
 
-    updateCategoryById(categoryId, category) {
+    async updateCategoryById(categoryId, category) {
 
         // get category id
         const isCategoryExists = await findById(categoryId)

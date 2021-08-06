@@ -1,25 +1,27 @@
 const express = require('express')
 const router = express.Router()
+const validation = require('../middleware/validations.middleware')
+const controller = require('./category.controller')
 
 router.post('/category',
-    validateCategoryRequest,
-    addCategory
+    validation.validateCategoryRequest,
+    controller.addCategory
 )
 
 router.get('/categories',
-    listCategories
+    controller.listCategories
 )
 
 router.get('/category/:categoryId',
-    getCategory
+    controller.getCategory
 )
 
 router.put('/category/:categoryId',
-    updateCategory
+    controller.updateCategory
 )
 
 router.delete('/category/:categoryId',
-    deleteCategory
+    controller.deleteCategory
 )
 
 module.exports = router

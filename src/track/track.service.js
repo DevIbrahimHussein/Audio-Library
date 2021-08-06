@@ -1,9 +1,9 @@
-const model = require('../model/track.model')
+const model = require('./track.model')
 const { convertToObject } = require('../utils/helpers')
 
 module.exports = {
 
-    createModel(reqBody) {
+    async createModel(reqBody) {
         return new model({
             name: reqBody.name,
             singer: reqBody.singer,
@@ -12,7 +12,7 @@ module.exports = {
         })
     },
 
-    allTrack(filter) {
+    async allTrack(filter) {
         return model
             .find(filter)
             .populate({
@@ -25,7 +25,7 @@ module.exports = {
             })
     },
 
-    findById(trackId) {
+    async findById(trackId) {
         return model
             .findById(trackId)
             .populate({
@@ -38,14 +38,14 @@ module.exports = {
             })
     },
 
-    insertTrack(data) {
+    async insertTrack(data) {
         // create track model
         const track = await this.createModel(data)
         // save track
         track.save()
     },
 
-    updateTrackById(trackId, track) {
+    async updateTrackById(trackId, track) {
         model
             .findByIdAndUpdate(trackId, track)
             .populate({
@@ -58,11 +58,11 @@ module.exports = {
             })
     },
 
-    deleteTrackById(trackId) {
+    async deleteTrackById(trackId) {
         model.findByIdAndDelete(trackId)
     },
 
-    allTracksWithAlbumId(filter) {
+    async allTracksWithAlbumId(filter) {
         return model.find(filter).sort({ createdDate: 1 })
     }
 

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const Category = require('./category.model')
-const Album = require('./album.model')
+const Category = require('../category/category.model')
+const Album = require('../album/album.model')
 
 const track = mongoose.Schema({
 

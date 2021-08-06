@@ -1,4 +1,4 @@
-const { allCategories, insertCategory, createModel, updateCategoryById, deleteCategoryById, findById } = require('../service/category.service')
+const { allCategories, insertCategory, updateCategoryById, deleteCategoryById, findById } = require('./category.service')
 const { convertToObject } = require('../utils/helpers')
 
 exports.listCategories = async (req, res) => {

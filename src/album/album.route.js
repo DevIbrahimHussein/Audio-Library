@@ -1,25 +1,27 @@
 const express = require('express')
-const routes = express.Router()
+const router = express.Router()
+const validation = require('../middleware/validations.middleware')
+const controller = require('./album.controller')
 
 router.post('/album',
-    validateAlbumRequest,
-    addAlbum
+    validation.validateAlbumRequest,
+    controller.addAlbum
 )
 
 router.get('/albums',
-    listAlbums
+    controller.listAlbums
 )
 
 router.get('/album/:albumId',
-    getAlbum
+    controller.getAlbum
 )
 
 router.put('/album/:albumId',
-    updateAlbum
+    controller.updateAlbum
 )
 
 router.delete('/album/:albumId',
-    deleteAlbum
+    controller.deleteAlbum
 )
 
 module.exports = router

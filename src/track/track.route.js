@@ -1,31 +1,33 @@
 const express = require('express')
 const router = express.Router()
-
+const validation = require('../middleware/validations.middleware')
+const controller = require('./track.controller')
+const middleware = require('../middleware/auth.middleware')
 
 router.post('/song',
-    validateTrackRequest,
-    addTrack
+    validation.validateTrackRequest,
+    controller.addTrack
 )
 
 router.get('/songs',
-    listTracks
+    controller.listTracks
 )
 
 router.get('/song/:songId',
-    getTrack
+    controller.getTrack
 )
 
 router.put('/song/:songId',
-    updateTrack
+    controller.updateTrack
 )
 
 router.delete('/song/:songId',
-    deleteTrack
+    controller.deleteTrack
 )
 
 router.get('/songs/:albumId',
-    verifyToken,
-    listTracksByAlbumId
+    middleware.verifyToken,
+    controller.listTracksByAlbumId
 )
 
 module.exports = router

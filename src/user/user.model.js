@@ -18,6 +18,16 @@ const user = mongoose.Schema({
         require: true
     },
 
+    loginAttempts: {
+        type: Number,
+        default: 0 
+    },
+
+    isBlocked: {
+        type: Boolean,
+        default: false
+    },
+
     registrationDate: {
         type: Date,
         default: new Date()

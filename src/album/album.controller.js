@@ -1,4 +1,4 @@
-const { allAlbums, insertAlbum, updateAlbumById, deleteAlbumById, createModel, findById } = require('../service/album.service')
+const { allAlbums, insertAlbum, updateAlbumById, deleteAlbumById, findById } = require('./album.service')
 
 exports.listAlbums = async (req, res) => {
 

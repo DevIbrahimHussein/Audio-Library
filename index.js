@@ -1,7 +1,14 @@
 // laod express
 const express = require('express')
+
 // load app
 global.app = express()
+
+// load dotenv
+require('dotenv')
+
+// load config
+global.__config = require('./src/config/app.config')
 
 const http = require('http')
 
@@ -10,8 +17,6 @@ const server = http.createServer(app)
 require('dotenv').config()
 // load database
 const databaseConnection = require('./src/config/database.config')
-
-const apis = require('./src/routes')
 
 const logger = require('./src/middleware/logger.middleware')
 
@@ -31,11 +36,15 @@ app.use(express.urlencoded({ extended: true }))
 app.use(logger) // for tracking
 app.use(trimRequest) // for security reasons
 
-app.use('/api', apis)
+app.use('/api', require('./src/album/album.route'))
+app.use('/api', require('./src/category/category.route'))
+app.use('/api', require('./src/track/track.route'))
+app.use('/api', require('./src/user/user.route'))
+
 app.use('*', (_, res) => { res.status(404).json({ msg: 'API End Point doesn\'t exist' }) })
 
 server.listen(
-  process.env.PORT,
+  __config.port,
   () => {
     console.log(`Audio-Library is running on port ${process.env.PORT}`)
   }

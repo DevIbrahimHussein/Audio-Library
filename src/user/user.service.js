@@ -1,4 +1,4 @@
-const model = require('../model/user.model')
+const model = require('./user.model')
 const jwt = require('jsonwebtoken')
 const sha256 = require('sha256')
 const { sendWelcomeEmail } = require('../utils/helpers')
@@ -63,13 +63,13 @@ module.exports = {
 
         // token will expire after 1 year
         const expiresIn = {
-            expiresIn: 31556926 // 1 year in seconds 
+            expiresIn: __config.jwt.expiresIn // 1 year in seconds 
         }
 
         // csign the token
         const token = jwt.sign(
             payload,
-            process.env.JwtSECRET,
+            __config.jwt.secret,
             expiresIn
         )
 
