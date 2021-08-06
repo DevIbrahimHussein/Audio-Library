@@ -1,38 +1,72 @@
 const model = require('../model/category.model')
 const { convertToObject } = require('../utils/helpers')
-
+const songsService = require('../songs/songs.service')
 module.exports = {
 
-    createModel(reqBody) {
+    async createModel(reqBody) {
         return new model({
             name: reqBody.name,
             description: reqBody.description,
         })
     },
 
-    allCategories() {
+    async allCategories() {
         return model.find()
     },
 
-    findById(categoryId) {
+    async findById(categoryId) {
+        // convert to object id in order to use it in aggregate function
         categoryId = convertToObject(categoryId)
+        // return category
         return model.aggregate([
             { $match: { _id: categoryId } }
         ])
     },
 
-    insertCategory(category) {
-        return category.save()
+    async insertCategory(data) {
+        // create category mdoel
+        const category = await this.createModel(data)
+
+        // save category into db
+        category.save()
     },
 
     updateCategoryById(categoryId, category) {
+
+        // get category id
+        const isCategoryExists = await findById(categoryId)
+
+        // throw error if category doesn't exists
+        if(!isCategoryExists) throw new Error('Category not exists')
+
+        // update date 
         category.updatedDate = new Date()
-        //categoryId = convertToObject(categoryId)
-        return model.findByIdAndUpdate(categoryId, category)
+
+        // remove category
+        model.findByIdAndUpdate(categoryId, category)
     },
 
-    deleteCategoryById(categoryId) {
-        return model.findByIdAndDelete(categoryId)
+    async deleteCategoryById(categoryId) {
+
+        // get category with category id
+        const isCategoryExists = await findById(categoryId)
+
+        // throw error if category doesn't exists
+        if(!isCategoryExists) throw new Error('Category not exists')
+
+        let filter = {}
+
+        // add category filter
+        filter.category = req.params.categoryId
+
+        // get songs with specified category
+        const isRelatedToSong = await songsService.allTrack(filter)
+
+        // throw error when category is related to song
+        if (isRelatedToSong != []) throw new Error('Category is related to a song')
+
+        // remove category
+        model.findByIdAndDelete(categoryId)
     }
 
 }

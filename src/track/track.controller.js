@@ -1,4 +1,4 @@
-const { createModel, allTrack, insertTrack, updateTrackById, deleteTrackById, findById, allTracksWithAlbumId } = require('./track.service')
+const { allTrack, insertTrack, updateTrackById, deleteTrackById, findById, allTracksWithAlbumId } = require('./track.service')
 
 exports.listTracks = async (req, res) => {
 
@@ -25,8 +25,7 @@ exports.getTrack = async (req, res) => {
 exports.addTrack = async (req, res) => {
 
     try {
-        const model = createModel(req.body)
-        const data = await insertTrack(model)
+        const data = await insertTrack(req.body)
         return res.json(data)
     } catch (e) {
         return res.status(500).json({ msg: e })

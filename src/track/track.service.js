@@ -38,13 +38,15 @@ module.exports = {
             })
     },
 
-    insertTrack(track) {
-        return track
-            .save()
+    insertTrack(data) {
+        // create track model
+        const track = await this.createModel(data)
+        // save track
+        track.save()
     },
 
     updateTrackById(trackId, track) {
-        return model
+        model
             .findByIdAndUpdate(trackId, track)
             .populate({
                 path: 'category',
@@ -57,7 +59,7 @@ module.exports = {
     },
 
     deleteTrackById(trackId) {
-        return model.findByIdAndDelete(trackId)
+        model.findByIdAndDelete(trackId)
     },
 
     allTracksWithAlbumId(filter) {
