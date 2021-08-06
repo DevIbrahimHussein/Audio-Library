@@ -33,4 +33,10 @@ const track = mongoose.Schema({
 
 }, { versionKey: false })
 
+// db indexes
+track.index({ singer: 1 })
+track.index({ category: 1 })
+track.index({ album: 1 })
+
+
 module.exports = mongoose.model('Track', track)

@@ -82,8 +82,26 @@ module.exports = {
         // find user
         const user = await this.isUserExist(data)
 
-        // throw error if email or password is incorrect
-        if(!user) throw new Error('email or password is incorrect')
+        // throw error if user blocked
+        if(user.isBlocked) throw new Error('You are blocked, contact your administrator')
+
+        //  if user doesn't found
+        if(!user) {
+            // increment login attempts by 1
+            model.findOneAndUpdate({ email: user.email }, {$inc: { 'loginAttempts': 1 }})
+            // check if this is the 4th time the user tried to login, block if true
+            if(user.loginAttempts == 3) {
+                // block email
+                model.findOneAndUpdate({ email: user.email }, { isBlocked: true })
+                // throw new error
+                throw new Error('You are blocked, contact your administrator')
+            }
+            // throw new error
+            throw new Error('email or password is incorrect')
+        }
+
+        // reset loginAttempts to default value 0
+        model.findOneAndUpdate({ _id: user._id }, { loginAttempts: 0 })
 
         // get signed token
         const token = await this.signToken(user)

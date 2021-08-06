@@ -26,4 +26,6 @@ const album = mongoose.Schema({
 
 }, { versionKey: false })
 
+album.index({ showNbTracks: 1 })
+
 module.exports = mongoose.model('Album', album)
