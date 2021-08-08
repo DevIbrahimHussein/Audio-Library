@@ -1,5 +1,6 @@
 const model = require('./track.model')
 const { convertToObject } = require('../utils/helpers')
+const ObjectId = require('mongoose').Types.ObjectId
 
 module.exports = {
 
@@ -12,7 +13,7 @@ module.exports = {
         })
     },
 
-    async allTrack(filter) {
+    allTrack(filter) {
         return model
             .find(filter)
             .populate({
@@ -39,27 +40,32 @@ module.exports = {
     },
 
     async insertTrack(data) {
+
+        if(ObjectId.isValid(data.category)) throw new Error('Category must be a valid id')
+
+        if(ObjectId.isValid(data.album)) throw new Error('Album must be a valid id')
+
         // create track model
-        const track = await this.createModel(data)
+        const track = await module.exports.createModel(data)
         // save track
         track.save()
     },
 
     async updateTrackById(trackId, track) {
-        model
-            .findByIdAndUpdate(trackId, track)
-            .populate({
-                path: 'category',
-                model: 'Category'
-            })
-            .populate({
-                path: 'album',
-                model: 'Album'
-            })
+
+        if(track.category) 
+            if(ObjectId.isValid(data.category)) 
+                throw new Error('Category must be a valid id')
+
+        if(track.album)    
+            if(ObjectId.isValid(data.album)) 
+                throw new Error('Album must be a valid id')
+
+        await model.findByIdAndUpdate(trackId, track)
     },
 
     async deleteTrackById(trackId) {
-        model.findByIdAndDelete(trackId)
+        await model.findByIdAndDelete(trackId)
     },
 
     async allTracksWithAlbumId(filter) {

@@ -1,10 +1,11 @@
 const { allTrack, insertTrack, updateTrackById, deleteTrackById, findById, allTracksWithAlbumId } = require('./track.service')
+const Response = require('../utils/response')
 
 exports.listTracks = async (req, res) => {
 
     try {
         const data = await allTrack({})
-        return res.status(200).json(data)
+        return res.json(data)
     } catch (e) {
         return res.status(500).json({ msg: e })
     }
@@ -25,8 +26,8 @@ exports.getTrack = async (req, res) => {
 exports.addTrack = async (req, res) => {
 
     try {
-        const data = await insertTrack(req.body)
-        return res.json(data)
+        await insertTrack(req.body)
+        return Response.ok(res, 200, undefined, undefined)
     } catch (e) {
         return res.status(500).json({ msg: e })
     }
@@ -36,8 +37,8 @@ exports.addTrack = async (req, res) => {
 exports.updateTrack = async (req, res) => {
 
     try {
-        const data = await updateTrackById(req.params.songId, req.body)
-        return res.json(data)
+        await updateTrackById(req.params.songId, req.body)
+        return Response.ok(res, 200, undefined, undefined)
     } catch (e) {
         return res.status(500).json({ msg: e })
     }
@@ -47,8 +48,8 @@ exports.updateTrack = async (req, res) => {
 exports.deleteTrack = async (req, res) => {
 
     try {
-        const data = await deleteTrackById(req.params.songId)
-        return res.json(data)
+        await deleteTrackById(req.params.songId)
+        return Response.ok(res, 200, undefined, undefined)
     } catch (e) {
         return res.status(500).json({ msg: e })
     }
@@ -61,8 +62,8 @@ exports.listTracksByAlbumId = async (req, res) => {
         let filter = {}
         filter.album = req.params.albumId
         if (req.query.category) filter.category = req.query.category
-        const data = await allTracksWithAlbumId(filter)
-        return res.json(data)
+        await allTracksWithAlbumId(filter)
+        return Response.ok(res, 200, undefined, undefined)
 
     } catch (e) {
         return res.status(500).json({ msg: e })

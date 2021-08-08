@@ -12,7 +12,7 @@ module.exports = {
     },
 
     async allCategories() {
-        return model.find()
+        return await model.find().lean()
     },
 
     async findById(categoryId) {
@@ -26,7 +26,7 @@ module.exports = {
 
     async insertCategory(data) {
         // create category mdoel
-        const category = await this.createModel(data)
+        const category = await module.exports.createModel(data)
 
         // save category into db
         category.save()
@@ -35,7 +35,7 @@ module.exports = {
     async updateCategoryById(categoryId, category) {
 
         // get category id
-        const isCategoryExists = await findById(categoryId)
+        const isCategoryExists = await model.findById(categoryId)
 
         // throw error if category doesn't exists
         if(!isCategoryExists) throw new Error('Category not exists')
@@ -43,14 +43,14 @@ module.exports = {
         // update date 
         category.updatedDate = new Date()
 
-        // remove category
-        model.findByIdAndUpdate(categoryId, category)
+        // remove category  
+        await model.findByIdAndUpdate(categoryId, category)
     },
 
     async deleteCategoryById(categoryId) {
 
         // get category with category id
-        const isCategoryExists = await findById(categoryId)
+        const isCategoryExists = await model.findById(categoryId)
 
         // throw error if category doesn't exists
         if(!isCategoryExists) throw new Error('Category not exists')
@@ -67,7 +67,7 @@ module.exports = {
         if (isRelatedToSong != []) throw new Error('Category is related to a song')
 
         // remove category
-        model.findByIdAndDelete(categoryId)
+        await model.findByIdAndDelete(categoryId)
     }
 
 }

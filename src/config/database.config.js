@@ -16,7 +16,7 @@ const databaseConnection = async () => {
 
     try {
         await mongoose.connect(
-            database,
+            'mongodb://127.0.0.1:27017/audio-library?directConnection=true&serverSelectionTimeoutMS=2000',
             options
         )
         console.log(`Connected to Database`)

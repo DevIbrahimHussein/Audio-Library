@@ -23,7 +23,6 @@ module.exports = {
         })
     },
 
-
     async isUserExist(data) {
 
         const hashedPassword = sha256(data.password)
@@ -38,13 +37,13 @@ module.exports = {
     async signup(body) {
 
         // get users with specified email
-        const isUserEmailExists = await this.isEmailExist(body.email)
+        const isUserEmailExists = await module.exports.isEmailExist(body.email)
 
         // throw error if email already exists
         if(isUserEmailExists) throw new Error('Email Exists')
 
         // create user model
-        const user = await createUserModel(body)
+        const user = await module.exports.createUserModel(body)
 
         // send welcome message
         sendWelcomeEmail(user)
@@ -80,31 +79,31 @@ module.exports = {
     async login(data) {
 
         // find user
-        const user = await this.isUserExist(data)
+        const user = await module.exports.isUserExist(data)
 
         // throw error if user blocked
-        if(user.isBlocked) throw new Error('You are blocked, contact your administrator')
+        if(user.isBlocked) throw new Error('Blocked')
 
         //  if user doesn't found
         if(!user) {
             // increment login attempts by 1
-            model.findOneAndUpdate({ email: user.email }, {$inc: { 'loginAttempts': 1 }})
+            await model.updateOne({ email: user.email }, {$inc: { 'loginAttempts': 1 }})
             // check if this is the 4th time the user tried to login, block if true
             if(user.loginAttempts == 3) {
                 // block email
-                model.findOneAndUpdate({ email: user.email }, { isBlocked: true })
+                await model.updateOne({ email: user.email }, { $set : { isBlocked: true }})
                 // throw new error
-                throw new Error('You are blocked, contact your administrator')
+                throw new Error('Blocked')
             }
-            // throw new error
-            throw new Error('email or password is incorrect')
+            // throw new error if credentials are incorrect
+            throw new Error('Incorrect')
         }
 
         // reset loginAttempts to default value 0
-        model.findOneAndUpdate({ _id: user._id }, { loginAttempts: 0 })
+        await model.findOneAndUpdate({ _id: user._id }, { loginAttempts: 0 })
 
         // get signed token
-        const token = await this.signToken(user)
+        const token = await module.exports.signToken(user)
 
         // return token
         return token
@@ -113,13 +112,13 @@ module.exports = {
 
     async allUsers() {
         // get all users without password
-        return model.aggregate([
+        return await model.aggregate([
             { $project: { password: 0 } }
         ])
     },
 
     async removeUser(userId) {
-        model.findByIdAndDelete(userId)
+        await model.findByIdAndDelete(userId)
     }
 
 }

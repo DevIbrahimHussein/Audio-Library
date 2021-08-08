@@ -4,18 +4,11 @@ const songService = require('../track/track.service')
 
 module.exports = {
 
-    async createModel(reqBody) {
+    async createModel(data) {
         return new Model({
-            name: reqBody.name,
-            description: reqBody.description
+            name: data.name,
+            description: data.description
         })
-    },
-
-    async albumUpdateModel(reqBody){
-        return {
-            name: reqbody.name,
-            description: reqBody.description
-        }
     },
 
     async allAlbums() {
@@ -53,23 +46,22 @@ module.exports = {
     },
 
     async insertAlbum(body) {
-        const album = await createModel(body)
-        return album.save()
+        const album = await module.exports.createModel(body)
+        album.save()
     },
 
     async updateAlbumById(albumId, album) {
 
         // get the album
-        const isAlbumExists = await findById(albumId)
+        const isAlbumExists = await Model.findById(albumId)
 
         // throw error if album doesn't exist
         if(!isAlbumExists) throw new Error('Already exists')
 
-        // update date 
-        album.updatedDate = new Date()
+        album.updatedDate = Date.now()
 
         // save
-        Model.findByIdAndUpdate(albumId, album)
+        await Model.findByIdAndUpdate(albumId, album)
     },
 
     async deleteAlbumById(albumId, params) {
@@ -77,7 +69,7 @@ module.exports = {
         let filter = {}
 
         // get album
-        const isAlbumExists = await findById(albumId)
+        const isAlbumExists = await Model.findById(albumId)
 
         // throw error if album doesn't exists
         if(!isAlbumExists) throw new Error('Album already exists')
@@ -91,7 +83,7 @@ module.exports = {
         if(isRelatedToSong != []) throw new Error('Is related to song')
 
         // delete
-        Model.findByIdAndDelete(albumId)
+        await Model.findByIdAndDelete(albumId)
     }
 
 }

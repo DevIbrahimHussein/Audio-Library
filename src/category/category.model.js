@@ -21,4 +21,5 @@ const category = mongoose.Schema({
 
 }, { versionKey: false })
 
+
 module.exports = mongoose.model('Category', category)

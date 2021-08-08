@@ -1,0 +1,14 @@
+index db
+_____________
+
+Index ALL foreign key columns.
+Create more indexes ONLY if:
+Queries are slow.
+You know the data volume is going to increase significantly.
+Run statistics when populating a lot of data in tables.
+
+If a query is slow, look at the execution plan and:
+If the query for a table only uses a few columns, put all those columns into an index
+Don't waste resources indexing tiny tables (hundreds of records).
+Index multiple columns in order from high cardinality to less. This means: first index the columns with more distinct values, followed by columns with fewer distinct values.
+If a query needs to access more than 10% of the data, a full scan is normally better than an index.
