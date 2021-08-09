@@ -1,4 +1,4 @@
-const { signup, allUsers, removeUser, login } = require('./user.service')
+const { signup, allUsers, removeUser, login, isBlocked } = require('./user.service')
 const Response = require('../utils/response')
 
 exports.signup = async (req, res) => {
@@ -42,6 +42,17 @@ exports.deleteUser = async (req, res) => {
 
     try {
         await removeUser(req.params.userId)
+        return Response.ok(res, 200, undefined, undefined)
+    } catch (e) {
+        return res.status(500).json({ msg: e })
+    }
+
+}
+
+exports.isBlocked = async(req, res) => {
+
+    try {
+        await isBlocked(req.body)
         return Response.ok(res, 200, undefined, undefined)
     } catch (e) {
         return res.status(500).json({ msg: e })

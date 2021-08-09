@@ -21,4 +21,8 @@ router.delete('/user/:userId',
     controller.deleteUser
 )
 
+router.post('/user/blocked',
+    controller.isBlocked
+)
+
 module.exports = router

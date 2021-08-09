@@ -2,6 +2,7 @@ const model = require('./user.model')
 const jwt = require('jsonwebtoken')
 const sha256 = require('sha256')
 const { sendWelcomeEmail } = require('../utils/helpers')
+const { findOne } = require('../album/album.model')
 
 module.exports = {
 
@@ -78,14 +79,17 @@ module.exports = {
 
     async login(data) {
 
-        // find user
-        const user = await module.exports.isUserExist(data)
+        // get email
+        user = await model.findOne({ email: data.email })
 
-        // throw error if user blocked
+        // throw error if email is blocked
         if(user.isBlocked) throw new Error('Blocked')
 
-        //  if user doesn't found
-        if(!user) {
+        // find user
+        const isAuthUser = await module.exports.isUserExist(data)
+
+        //  if credentials are wrong
+        if(!isAuthUser) {
             // increment login attempts by 1
             await model.updateOne({ email: user.email }, {$inc: { 'loginAttempts': 1 }})
             // check if this is the 4th time the user tried to login, block if true
@@ -100,7 +104,7 @@ module.exports = {
         }
 
         // reset loginAttempts to default value 0
-        await model.findOneAndUpdate({ _id: user._id }, { loginAttempts: 0 })
+        await model.findOneAndUpdate({ _id: isAuthUser._id }, { loginAttempts: 0 })
 
         // get signed token
         const token = await module.exports.signToken(user)
@@ -108,6 +112,17 @@ module.exports = {
         // return token
         return token
 
+    },
+
+    async isBlocked(body){
+        // throw error if email is not passed 
+        if(!body.email) throw new Error('Must Provide an email')
+
+        // throw error if isBlocked is not passed
+        if(body.isBlocked == null) throw new Error('Must Provide status')
+
+        // update user blocking
+        await model.updateOne({ email: body.email }, { $set: { isBlocked: body.isBlocked, loginAttempts: 0 } } )
     },
 
     async allUsers() {
