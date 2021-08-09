@@ -33,6 +33,27 @@ module.exports = {
             console.log(e)
         }
 
+    },
+
+    sendResetPasswordEmail(user, token){
+
+        cn
+
+        const mailOptions = {
+            from: 'support@audio-library.com',
+            to: user.email,  
+            subject: "Audio-Library Reset Password ",
+            text: `Welcome ${user.name}, 
+            kinldy check the below link to reset your password.
+            Your link is only valid for 1 hour\nYour Link   ` + __config.server.url + `api/user/${user._id}/token/${token}`
+        }
+
+        try {
+            transporter.sendMail(mailOptions)
+        } catch(e) {
+            console.log(e)
+        }
+
     }
 
 }

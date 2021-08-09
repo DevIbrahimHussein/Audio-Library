@@ -1,4 +1,4 @@
-const { signup, allUsers, removeUser, login, isBlocked } = require('./user.service')
+const { signup, allUsers, removeUser, login, isBlocked, sendResetPasswordEmail } = require('./user.service')
 const Response = require('../utils/response')
 
 exports.signup = async (req, res) => {
@@ -60,3 +60,27 @@ exports.isBlocked = async(req, res) => {
 
 }
 
+exports.sendResetPasswordEmail = async(req, res) => {
+
+    try {
+        await sendResetPasswordEmail(req.body.email)
+        return Response.ok(res, 200, undefined, undefined)
+    } catch (e) {
+        return res.status(500).json({ msg: e }) 
+    }
+
+}
+
+exports.checkResetTokenTokenValidation = async(req, res) => {
+
+}
+
+exports.resetPassword = async(req, res) => {
+
+    try {
+
+    } catch(e){
+        
+    }
+
+}

@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const validation = require('../middleware/validations.middleware')
 const controller = require('./track.controller')
 const middleware = require('../middleware/auth.middleware')
+const validation = require('./track.validator')
 
 router.post('/song',
     validation.validateTrackRequest,

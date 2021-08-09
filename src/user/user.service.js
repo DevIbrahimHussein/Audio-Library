@@ -1,8 +1,8 @@
 const model = require('./user.model')
 const jwt = require('jsonwebtoken')
 const sha256 = require('sha256')
-const { sendWelcomeEmail } = require('../utils/helpers')
-const { findOne } = require('../album/album.model')
+const { sendResetPasswordEmail } = require('../utils/helpers')
+const crypto = require('crypto')
 
 module.exports = {
 
@@ -134,6 +134,26 @@ module.exports = {
 
     async removeUser(userId) {
         await model.findByIdAndDelete(userId)
+    },
+
+    async sendResetPasswordEmail(email){
+        
+        const user = await model.findOne({ email: email }, 'email name')
+        
+        if(!user) throw new Error('Email not exists')
+
+        const token = crypto.randomBytes(20).toString('hex')
+        const expiresIn = new Date() + 3600000
+        await model.updateOne(
+            { email: email },
+            { $set: 
+                { 
+                    resetPasswordToken: token,
+                    resetPasswordExpires: expiresIn 
+                } 
+            }
+        )
+        sendResetPasswordEmail(user, token)
     }
 
 }

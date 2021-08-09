@@ -9,6 +9,12 @@ module.exports = {
 
     env: process.env.NODE_ENV || 'development',
 
+    server: {
+        port: process.env.PORT || 8989,
+        domain: '127.0.0.1',
+        url: 'http://localhost:8989/'
+    },
+
     port: process.env.PORT || 8989,
 
     mongo: {

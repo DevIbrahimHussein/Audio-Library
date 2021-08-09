@@ -31,6 +31,16 @@ const user = mongoose.Schema({
     registrationDate: {
         type: Date,
         default: new Date()
+    },
+
+    resetPasswordToken: {
+        type: String,
+        require: false
+    },
+
+    resetPasswordExpires: {
+        type: Date,
+        require: false
     }
 
 }, { versionKey: false })
