@@ -115,12 +115,6 @@ module.exports = {
     },
 
     async isBlocked(body){
-        // throw error if email is not passed 
-        if(!body.email) throw new Error('Must Provide an email')
-
-        // throw error if isBlocked is not passed
-        if(body.isBlocked == null) throw new Error('Must Provide status')
-
         // update user blocking
         await model.updateOne({ email: body.email }, { $set: { isBlocked: body.isBlocked, loginAttempts: 0 } } )
     },
@@ -149,11 +143,32 @@ module.exports = {
             { $set: 
                 { 
                     resetPasswordToken: token,
-                    resetPasswordExpires: expiresIn 
+                    resetPasswordExpiresDate: expiresIn 
                 } 
             }
         )
         sendResetPasswordEmail(user, token)
+    },
+
+    async checkResetPasswordUrlValidation(userId, token){
+        
+        const user = model.findOne({ _id: userId , resetPasswordToken: token}, { resetPasswordExpiresDate })
+
+        const date = new Date()
+
+        // if now date is newer than expiry date throw error
+        if(date.getTime() > user.resetPasswordExpiresDate.getTime()) throw new Error('Link is not valid')
+
+    },
+
+    async resetPassword(userId, token, newPassword){
+
+        module.exports.checkResetPasswordUrlValidation(userId, token)
+
+        await model.updateOne(
+            { _id: userId },
+            { $set : { password: newPassword } }
+        )
     }
 
 }

@@ -73,6 +73,12 @@ exports.sendResetPasswordEmail = async(req, res) => {
 
 exports.checkResetTokenTokenValidation = async(req, res) => {
 
+    try {
+        
+    } catch (e) {
+        return res.status(500).json({ msg: e }) 
+    }
+
 }
 
 exports.resetPassword = async(req, res) => {
@@ -80,7 +86,7 @@ exports.resetPassword = async(req, res) => {
     try {
 
     } catch(e){
-        
+        return res.status(500).json({ msg: e }) 
     }
 
 }

@@ -39,7 +39,7 @@ router.get('/user/:id/token/:token',
     controller.checkResetTokenTokenValidation,
 )
 
-router.post('/user/new/password/',
+router.post('/user/:userId/new/password/',
     validation.resetPassword,
     controller.resetPassword
 )

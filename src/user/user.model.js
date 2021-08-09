@@ -38,7 +38,7 @@ const user = mongoose.Schema({
         require: false
     },
 
-    resetPasswordExpires: {
+    resetPasswordExpiresDate: {
         type: Date,
         require: false
     }
