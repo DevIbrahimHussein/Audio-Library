@@ -41,9 +41,11 @@ module.exports = {
 
     async insertTrack(data) {
 
-        if(ObjectId.isValid(data.category)) throw new Error('Category must be a valid id')
+        // throw error if category id is not valid
+        if(!ObjectId.isValid(data.category)) throw new Error('Category must be a valid id')
 
-        if(ObjectId.isValid(data.album)) throw new Error('Album must be a valid id')
+        // throw error if album id is not valid
+        if(!ObjectId.isValid(data.album)) throw new Error('Album must be a valid id')
 
         // create track model
         const track = await module.exports.createModel(data)
