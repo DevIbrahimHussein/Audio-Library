@@ -11,8 +11,11 @@ module.exports = {
         })
     },
 
-    async allCategories() {
-        return await model.find().lean()
+    allCategories(limit, skip) {
+        return model.find()
+            .skip(skip)
+            .limit(limit)
+            .lean()
     },
 
     async findById(categoryId) {
@@ -38,7 +41,7 @@ module.exports = {
         const isCategoryExists = await model.findById(categoryId)
 
         // throw error if category doesn't exists
-        if(!isCategoryExists) throw new Error('Category not exists')
+        if (!isCategoryExists) throw new Error('Category not exists')
 
         // update date 
         category.updatedDate = new Date()
@@ -53,7 +56,7 @@ module.exports = {
         const isCategoryExists = await model.findById(categoryId)
 
         // throw error if category doesn't exists
-        if(!isCategoryExists) throw new Error('Category not exists')
+        if (!isCategoryExists) throw new Error('Category not exists')
 
         let filter = {}
 

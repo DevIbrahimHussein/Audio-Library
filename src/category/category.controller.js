@@ -6,7 +6,10 @@ exports.listCategories = async (req, res) => {
 
     try {
 
-        const data = await allCategories()
+        const skip = Number(req.query.skip)
+        const limit = Number(req.query.limit)
+
+        const data = await allCategories(limit, skip)
         return res.json(data)
 
     } catch (e) {

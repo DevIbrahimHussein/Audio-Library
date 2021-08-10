@@ -66,7 +66,7 @@ module.exports = {
             expiresIn: __config.jwt.expiresIn // 1 year in seconds 
         }
 
-        // csign the token
+        // sign the token
         const token = jwt.sign(
             payload,
             __config.jwt.secret,
@@ -132,12 +132,19 @@ module.exports = {
 
     async sendResetPasswordEmail(email){
         
+        // get user's id, name, and email
         const user = await model.findOne({ email: email }, 'email name')
         
+        // throw error if no user found
         if(!user) throw new Error('Email not exists')
 
+        // generate token for reset password
         const token = crypto.randomBytes(20).toString('hex')
+
+        // token expires in 1 hour
         const expiresIn = new Date() + 3600000
+
+        // update user
         await model.updateOne(
             { email: email },
             { $set: 
@@ -147,6 +154,8 @@ module.exports = {
                 } 
             }
         )
+        
+        // send an email along with the reset password URL
         sendResetPasswordEmail(user, token)
     },
 

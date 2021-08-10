@@ -4,7 +4,9 @@ const Response = require('../utils/response')
 exports.listTracks = async (req, res) => {
 
     try {
-        const data = await allTrack({})
+        const skip = Number(req.query.skip)
+        const limit = Number(req.query.limit)
+        const data = await allTrack({}, skip, limit)
         return res.json(data)
     } catch (e) {
         return res.status(500).json({ msg: e })
