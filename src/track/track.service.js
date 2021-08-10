@@ -12,19 +12,34 @@ module.exports = {
         })
     },
 
-    allTrack(filter, skip, limit) {
+    allTrack(url_query) {
 
-        let aggregate_array = [
-            { $lookup: { from: "categories", localField: "category", foreignField: "_id", as: "category" } },
-            { $lookup: { from: "albums", localField: "album", foreignField: "_id", as: "album" } }
-        ]
+        // aggregate array init
+        let aggregate_array = []
 
-        if(skip) 
-            aggregate_array.push({ $skip: skip })
+        // filter init
+        let filter = {}
 
-        if(limit) 
-            aggregate_array.push({ $limit: limit })
+        // add category id to filter if exists
+        if(url_query.categoryId) filter.category = convertToObject(url_query.categoryId)
 
+        // add album id to filter if exists
+        if(url_query.albumId) filter.album = convertToObject(url_query.albumId)
+
+        // if not empty push filter to aggregate array
+        if(filter) aggregate_array.push({ $match: filter })
+        
+        // push skip to aggregate array if exists
+        if(url_query.skip) aggregate_array.push({ $skip: Number(url_query.skip) })
+
+        // push limit to aggregate array if exists
+        if(url_query.limit) aggregate_array.push({ $limit: Number(url_query.limit) })
+
+        // push joining
+        aggregate_array.push({ $lookup: { from: "categories", localField: "category", foreignField: "_id", as: "category" } })
+        aggregate_array.push({ $lookup: { from: "albums", localField: "album", foreignField: "_id", as: "album" } })
+
+        // execute & return aggregate array
         return model.aggregate(aggregate_array)
         
     },
@@ -47,6 +62,7 @@ module.exports = {
 
         // create track model
         const track = await module.exports.createModel(data)
+        
         // save track
         track.save()
     },
