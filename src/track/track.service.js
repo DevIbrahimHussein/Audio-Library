@@ -26,6 +26,8 @@ module.exports = {
         // add album id to filter if exists
         if(url_query.albumId) filter.album = convertToObject(url_query.albumId)
 
+        if(url_query.search) filter.singer = { $regex : url_query.search , $options : 'i' }
+
         // if not empty push filter to aggregate array
         if(filter) aggregate_array.push({ $match: filter })
         
@@ -62,7 +64,7 @@ module.exports = {
 
         // create track model
         const track = await module.exports.createModel(data)
-        
+
         // save track
         track.save()
     },
