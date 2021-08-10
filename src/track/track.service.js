@@ -26,6 +26,7 @@ module.exports = {
         // add album id to filter if exists
         if(url_query.albumId) filter.album = convertToObject(url_query.albumId)
 
+        // if search key available, search for it
         if(url_query.search) filter.singer = { $regex : url_query.search , $options : 'i' }
 
         // if not empty push filter to aggregate array
