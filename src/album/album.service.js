@@ -1,7 +1,7 @@
 const Model = require('./album.model')
 const { convertToObject } = require('../utils/helpers')
 const songService = require('../track/track.service')
-
+const Response = require('../utils/response')
 module.exports = {
 
     async createModel(data) {
@@ -56,7 +56,7 @@ module.exports = {
         const isAlbumExists = await Model.findById(albumId)
 
         // throw error if album doesn't exist
-        if(!isAlbumExists) throw new Error('Already exists')
+        if(!isAlbumExists) throw new Error(Response.response_msgs.IS_EXIST)
 
         album.updatedDate = Date.now()
 
@@ -72,7 +72,7 @@ module.exports = {
         const isAlbumExists = await Model.findById(albumId)
 
         // throw error if album doesn't exists
-        if(!isAlbumExists) throw new Error('Album already exists')
+        if(!isAlbumExists) throw new Error(Response.response_msgs.IS_EXIST)
 
         filter.album = params.albumId
         
@@ -80,7 +80,7 @@ module.exports = {
         const isRelatedToSong = await songService.allTrack(filter)
 
         // throw error if album is related to song
-        if(isRelatedToSong != []) throw new Error('Is related to song')
+        if(isRelatedToSong != []) throw new Error(Response.response_msgs.RELTATED)
 
         // delete
         await Model.findByIdAndDelete(albumId)

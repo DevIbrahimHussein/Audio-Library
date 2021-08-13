@@ -1,6 +1,6 @@
 const model = require('./track.model')
 const { convertToObject } = require('../utils/helpers')
-
+const Response = require('../utils/response')
 module.exports = {
 
     async createModel(reqBody) {
@@ -58,10 +58,10 @@ module.exports = {
     async insertTrack(data) {
 
         // throw error if category id is not valid
-        if (!ObjectId.isValid(data.category)) throw new Error('Category must be a valid id')
+        if (!ObjectId.isValid(data.category)) throw new Error(Response.response_msgs.NOT_VALID_ID)
 
         // throw error if album id is not valid
-        if (!ObjectId.isValid(data.album)) throw new Error('Album must be a valid id')
+        if (!ObjectId.isValid(data.album)) throw new Error(Response.response_msgs.NOT_VALID_ID)
 
         // create track model
         const track = await module.exports.createModel(data)
@@ -74,11 +74,11 @@ module.exports = {
 
         if (track.category)
             if (ObjectId.isValid(data.category))
-                throw new Error('Category must be a valid id')
+                throw new Error(Response.response_msgs.NOT_VALID_ID)
 
         if (track.album)
             if (ObjectId.isValid(data.album))
-                throw new Error('Album must be a valid id')
+                throw new Error(Response.response_msgs.NOT_VALID_ID)
 
         await model.findByIdAndUpdate(trackId, track)
     },

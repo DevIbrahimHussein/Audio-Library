@@ -1,7 +1,7 @@
 const model = require('./category.model')
 const { convertToObject } = require('../utils/helpers')
 const songsService = require('../track/track.service')
-
+const Response = require('../utils/response')
 module.exports = {
 
     async createModel(reqBody) {
@@ -41,7 +41,7 @@ module.exports = {
         const isCategoryExists = await model.findById(categoryId)
 
         // throw error if category doesn't exists
-        if (!isCategoryExists) throw new Error('Category not exists')
+        if (!isCategoryExists) throw new Error(Response.response_msgs.IS_EXIST)
 
         // update date 
         category.updatedDate = new Date()
@@ -56,7 +56,7 @@ module.exports = {
         const isCategoryExists = await model.findById(categoryId)
 
         // throw error if category doesn't exists
-        if (!isCategoryExists) throw new Error('Category not exists')
+        if (!isCategoryExists) throw new Error(Response.response_msgs.NOT_EXIST)
 
         let filter = {}
 
@@ -67,7 +67,7 @@ module.exports = {
         const isRelatedToSong = await songsService.allTrack(filter)
 
         // throw error when category is related to song
-        if (isRelatedToSong != []) throw new Error('Category is related to a song')
+        if (isRelatedToSong != []) throw new Error(Response.response_msgs.RELTATED)
 
         // remove category
         await model.findByIdAndDelete(categoryId)

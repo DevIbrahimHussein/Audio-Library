@@ -41,7 +41,7 @@ module.exports = {
         const isUserEmailExists = await module.exports.isEmailExist(body.email)
 
         // throw error if email already exists
-        if(isUserEmailExists) throw new Error('Email Exists')
+        if(isUserEmailExists) throw new Error(Response.response_msgs.IS_EXIST)
 
         // create user model
         const user = await module.exports.createUserModel(body)
@@ -97,7 +97,7 @@ module.exports = {
                 // block email
                 await model.updateOne({ email: user.email }, { $set : { isBlocked: true }})
                 // throw new error
-                throw new Error('Blocked')
+                throw new Error(Response.response_msgs.BLOCKED)
             }
             // throw new error if credentials are incorrect
             throw new Error('Incorrect')
@@ -136,7 +136,7 @@ module.exports = {
         const user = await model.findOne({ email: email }, 'email name')
         
         // throw error if no user found
-        if(!user) throw new Error('Email not exists')
+        if(!user) throw new Error(Response.response_msgs.NOT_EXIST)
 
         // generate token for reset password
         const token = crypto.randomBytes(20).toString('hex')
@@ -166,7 +166,7 @@ module.exports = {
         const date = new Date()
 
         // if now date is newer than expiry date throw error
-        if(date.getTime() > user.resetPasswordExpiresDate.getTime()) throw new Error('Link is not valid')
+        if(date.getTime() > user.resetPasswordExpiresDate.getTime()) throw new Error(Response.response_msgs.NOT_VALID_LINK)
 
     },
 
