@@ -11,20 +11,20 @@ module.exports = {
         })
     },
 
-    allCategories(limit, skip) {
-        return model.find()
-            .skip(skip)
-            .limit(limit)
-            .lean()
-    },
+    allCategories(query, params) {
 
-    async findById(categoryId) {
-        // convert to object id in order to use it in aggregate function
-        categoryId = convertToObject(categoryId)
-        // return category
-        return model.aggregate([
-            { $match: { _id: categoryId } }
-        ])
+        let aggregate_array = []
+        let filter = {}
+
+        if(params.categoryId) filter._id = convertToObject(params.categoryId)
+
+        if(filter) aggregate_array.push({ $match: filter })
+
+        if(query.limit) aggregate_array.push({ $limit : Number(query.limit) })
+
+        if(query.skip) aggregate_array.push({ $skip : Number(query.skip) })
+
+        return model.aggregate(aggregate_array)
     },
 
     async insertCategory(data) {

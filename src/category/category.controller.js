@@ -6,10 +6,7 @@ exports.listCategories = async (req, res) => {
 
     try {
 
-        const skip = Number(req.query.skip)
-        const limit = Number(req.query.limit)
-
-        const data = await allCategories(limit, skip)
+        const data = await allCategories(req.query, req.params)
         return Response.ok(res, data)
 
     } catch (e) {
@@ -22,7 +19,7 @@ exports.getCategory = async (req, res) => {
 
     try {
 
-        const data = await findById(req.params.categoryId)
+        const data = await allCategories(req.query, req.params)
         return Response.ok(res, data)
 
     } catch (e) {
