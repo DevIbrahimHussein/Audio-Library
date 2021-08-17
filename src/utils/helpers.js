@@ -37,8 +37,6 @@ module.exports = {
 
     sendResetPasswordEmail(user, token){
 
-        cn
-
         const mailOptions = {
             from: 'support@audio-library.com',
             to: user.email,  

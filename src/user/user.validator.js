@@ -79,7 +79,7 @@ exports.validateEmailResetPassword = async (req, res, next) => {
 exports.resetPassword = async (req, res, next) => {
 
     const Schema = Joi.object({
-        newPassword: Joi.string().required()
+        password: Joi.string().required()
     })
 
     try {

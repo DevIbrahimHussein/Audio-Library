@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const sha256 = require('sha256')
 const { sendResetPasswordEmail } = require('../utils/helpers')
 const crypto = require('crypto')
+const Response = require('../utils/response')
 
 module.exports = {
 
@@ -83,7 +84,7 @@ module.exports = {
         user = await model.findOne({ email: data.email })
 
         // throw error if email is blocked
-        if(user.isBlocked) throw new Error('Blocked')
+        if(user.isBlocked) throw new Error(Response.response_msgs.BLOCKED)
 
         // find user
         const isAuthUser = await module.exports.isUserExist(data)
@@ -135,19 +136,22 @@ module.exports = {
     },
 
     async sendResetPasswordEmail(email){
-        
+
         // get user's id, name, and email
         const user = await model.findOne({ email: email }, 'email name')
         
         // throw error if no user found
         if(!user) throw new Error(Response.response_msgs.NOT_EXIST)
 
+        // throw error if user is Blocked
+        if(user.isBlocked) throw new Error(Response.response_msgs.BLOCKED)
+        
         // generate token for reset password
         const token = crypto.randomBytes(20).toString('hex')
-
+        
         // token expires in 1 hour
         const expiresIn = new Date() + 3600000
-
+        
         // update user
         await model.updateOne(
             { email: email },
@@ -174,9 +178,7 @@ module.exports = {
 
     },
 
-    async resetPassword(userId, token, newPassword){
-
-        module.exports.checkResetPasswordUrlValidation(userId, token)
+    async resetPassword(userId, newPassword){
 
         await model.updateOne(
             { _id: userId },
