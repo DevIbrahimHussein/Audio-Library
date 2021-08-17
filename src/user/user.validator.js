@@ -1,10 +1,11 @@
 const Joi = require('joi')
+const Response = require('../utils/response')
 
 exports.validateRegistrationRequest = async (req, res, next) => {
 
     const schema = Joi.object({
         name: Joi.string().required(),
-        email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        email: Joi.string().required(),
         password: Joi.string().required()
     })
 
@@ -12,12 +13,11 @@ exports.validateRegistrationRequest = async (req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if (error) return res.status(400).json({ msg: error.details[0].message })
-
+        if (error) return Response.notOk(res, 400,  { msg: error.details[0].message })
         next()
 
     } catch (e) {
-        return res.status(500).json({ msg: e })
+        return Response.notOk(res, e.message)
     }
 
 }
@@ -25,7 +25,7 @@ exports.validateRegistrationRequest = async (req, res, next) => {
 exports.validateLoginRequest = async (req, res, next) => {
 
     const schema = Joi.object({
-        email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        email: Joi.string().required(),
         password: Joi.string().required()
     })
 
@@ -33,12 +33,12 @@ exports.validateLoginRequest = async (req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if (error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return Response.notOk(res, 400,  { msg: error.details[0].message })
 
         next()
 
     } catch (e) {
-        return res.status(500).json({ msg: e })
+        return Response.notOk(res, e.message)
     }
 
 }
@@ -52,10 +52,10 @@ exports.validateBlocking = async (req, res, next) => {
 
     try {
         const { error } = Schema.validate(req.body)
-        if (error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return Response.notOk(res, 400,  { msg: error.details[0].message })
         next() 
     } catch(e){
-        return res.status(500).json({ msg: e })
+        return Response.notOk(res, e.message)
     }
 
 }
@@ -68,10 +68,10 @@ exports.validateEmailResetPassword = async (req, res, next) => {
 
     try {
         const { error } = Schema.validate(req.body)
-        if (error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return Response.notOk(res, 400,  { msg: error.details[0].message })
         next() 
     } catch(e){
-        return res.status(500).json({ msg: e })
+        return Response.notOk(res, e.message)
     }
 
 }
@@ -84,10 +84,10 @@ exports.resetPassword = async (req, res, next) => {
 
     try {
         const { error } = Schema.validate(req.body)
-        if (error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return Response.notOk(res, 400,  { msg: error.details[0].message })
         next() 
     } catch(e){
-        return res.status(500).json({ msg: e })
+        return Response.notOk(res, e.message)
     }
 
 }

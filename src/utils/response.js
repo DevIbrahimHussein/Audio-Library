@@ -19,7 +19,7 @@ module.exports = {
         return res.json(response)
     },
 
-    notOk: function (res, status, message = undefined) {
+    notOk: function (res, status = 500, message = undefined) {
         let response = {}
         response.message = message
         response.status = status

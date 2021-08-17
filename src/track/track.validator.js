@@ -1,5 +1,5 @@
 const Joi = require('joi')
-
+const Response = require('../utils/response')
 
 exports.validateTrackRequest = async (req, res, next) => {
 
@@ -14,12 +14,12 @@ exports.validateTrackRequest = async (req, res, next) => {
 
         const { error } = schema.validate(req.body)
 
-        if (error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return Response.notOk(res, 400,  { msg: error.details[0].message })
 
         next()
 
     } catch (e) {
-        return res.status(500).json({ msg: e })
+        return Response.notOk(res, e.message)
     }
 
 }
