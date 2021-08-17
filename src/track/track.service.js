@@ -1,6 +1,8 @@
 const model = require('./track.model')
 const { convertToObject } = require('../utils/helpers')
 const Response = require('../utils/response')
+var ObjectId = require('mongoose').Types.ObjectId
+
 module.exports = {
 
     async createModel(reqBody) {
@@ -20,14 +22,14 @@ module.exports = {
         // filter init
         let filter = {}
 
-        // add category id to filter if exists
+        // convert & add category id to filter if exists
         if(url_query.categoryId) filter.category = convertToObject(url_query.categoryId)
 
-        // add album id to filter if exists
+        // convert & add album id to filter if exists
         if(url_query.albumId) filter.album = convertToObject(url_query.albumId)
 
         // if search key available, search for it
-        if(url_query.search) filter.singer = { $regex : url_query.search , $options : 'i' }
+        if(url_query.singer) filter.singer = { $regex : url_query.singer , $options : 'i' }
 
         // if not empty push filter to aggregate array
         if(filter) aggregate_array.push({ $match: filter })
@@ -87,8 +89,52 @@ module.exports = {
         await model.findByIdAndDelete(trackId)
     },
 
-    async allTracksWithAlbumId(filter) {
-        return model.find(filter).sort({ createdDate: 1 })
+    async allTracksWithAlbumId(params, query) {
+        // aggregate array init
+        let aggregate_array = []
+
+        // filter init
+        let filter = {}
+
+        // convert & add category id to filter if exists
+        if(query.categoryId) filter.category = convertToObject(query.categoryId)
+
+        // convert & add album id to filter if exists
+        if(params.albumId) filter.album = convertToObject(params.albumId)
+
+        // if search key available, search for singer
+        if(query.singer) filter.singer = { $regex : query.singer , $options : 'i' }
+
+        aggregate_array.push({ $lookup: { from: "categories", localField: "category", foreignField: "_id", as: "category" } })
+
+        // search by category name
+        aggregate_array.push({ $addFields: { category_name : "$category.name" } })
+
+        // add query 
+        if(query.category) filter.category_name = { $regex : query.category, $options : 'i' }
+
+        // if not empty push filter to aggregate array
+        if(filter) aggregate_array.push({ $match: filter })
+        
+        // push skip to aggregate array if exists
+        if(query.skip) aggregate_array.push({ $skip: Number(query.skip) })
+
+        // push limit to aggregate array if exists
+        if(query.limit) aggregate_array.push({ $limit: Number(query.limit) })
+
+        // sort by created date
+        aggregate_array.push({ '$sort': { createdDate: 1 } })
+
+        // push joining
+        aggregate_array.push({ $lookup: { from: "albums", localField: "album", foreignField: "_id", as: "album" } })
+
+        // remove field category_name
+        aggregate_array.push({ $project : { category_name : 0 } })
+
+        console.log(aggregate_array)
+
+        // execute & return aggregate array
+        return model.aggregate(aggregate_array)
     }
 
 }

@@ -90,13 +90,18 @@ module.exports = {
 
         //  if credentials are wrong
         if(!isAuthUser) {
+
+            const MAX_LOGIN_ATTEMPPTS = 4 
+
             // increment login attempts by 1
             await model.updateOne({ email: user.email }, {$inc: { 'loginAttempts': 1 }})
+            
             // check if this is the 4th time the user tried to login, block if true
-            if(user.loginAttempts == 3) {
+            if(user.loginAttempts == MAX_LOGIN_ATTEMPPTS - 1) {
+
                 // block email
                 await model.updateOne({ email: user.email }, { $set : { isBlocked: true }})
-                // throw new error
+                
                 throw new Error(Response.response_msgs.BLOCKED)
             }
             // throw new error if credentials are incorrect
@@ -109,7 +114,6 @@ module.exports = {
         // get signed token
         const token = await module.exports.signToken(user)
 
-        // return token
         return token
 
     },

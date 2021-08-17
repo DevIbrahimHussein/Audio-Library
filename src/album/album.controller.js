@@ -5,7 +5,7 @@ exports.listAlbums = async (req, res) => {
 
     try {
 
-        const data = await allAlbums()
+        const data = await allAlbums(req.params)
         return Response.ok(res, data)
 
     } catch (e) {
@@ -18,7 +18,7 @@ exports.getAlbum = async (req, res) => {
 
     try {
 
-        const data = await findById(req.params.albumId)
+        const data = await allAlbums(req.params)
         return Response.ok(res, data)
 
     } catch (e) {

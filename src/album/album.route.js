@@ -2,6 +2,10 @@ const express = require('express')
 const router = express.Router()
 const validation = require('./album.validator')
 const controller = require('./album.controller')
+const { validate } = require('express-validation')
+//const adminSettingsValidation = require('./adminSettings.validation')
+
+//  validate(adminSettingsValidation.updateAdminSettingsValidation), Controller.updateAdminSettings
 
 router.post('/album',
     validation.validateAlbumRequest,

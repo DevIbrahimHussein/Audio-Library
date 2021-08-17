@@ -11,38 +11,29 @@ module.exports = {
         })
     },
 
-    async allAlbums() {
-        return Model.aggregate([
-            { $sort: { createdDate: -1 } },
-            {
-                $lookup: {
-                    from: "tracks",
-                    let: { album: "$_id" },
-                    pipeline: [{ $match: { $expr: { $eq: ["$$album", "$album"] } } }],
-                    as: "tracks"
-                }
-            },
-            { $addFields: { showNbTracks: { $size: "$tracks" } } }
-        ])
-    },
+    async allAlbums(params) {
 
-    async findById(albumId) {
-        
-        // convert album id for aggregation
-        albumId = convertToObject(albumId)
+        let aggregate_array = []
+        let filter = {}
 
-        return Model.aggregate([
-            { $match: { _id: albumId } },
-            {
-                $lookup: {
-                    from: "tracks",
-                    let: { album: "$_id" },
-                    pipeline: [{ $match: { $expr: { $eq: ["$$album", "$album"] } } }],
-                    as: "tracks"
-                }
-            },
-            { $addFields: { showNbTracks: { $size: "$tracks" } } }
-        ])
+        if(params.albumId) filter._id = convertToObject(params.albumId)
+
+        if(filter) aggregate_array.push({ $match: filter })
+
+        aggregate_array.push({ $sort: { createdDate: -1 } })
+
+        aggregate_array.push({
+            $lookup: {
+                from: "tracks",
+                let: { album: "$_id" },
+                pipeline: [{ $match: { $expr: { $eq: ["$$album", "$album"] } } }],
+                as: "tracks"
+            }
+        })
+
+        aggregate_array.push({ $addFields: { showNbTracks: { $size: "$tracks" } } })
+
+        return Model.aggregate(aggregate_array)
     },
 
     async insertAlbum(body) {

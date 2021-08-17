@@ -1,22 +1,24 @@
-const Joi = require('joi')
+const { validate, ValidationError, Joi } = require('express-validation')
 
 exports.validateAlbumRequest = async (req, res, next) => {
 
-    const schema = Joi.object({
-        name: Joi.string().required(),
-        description: Joi.string().required()
-    })
+    const schema = {
+        body: Joi.object({
+            name: Joi.string().required(),
+            description: Joi.string().required()
+        })
+    }
 
     try {
 
-        const { error } = schema.validate(req.body)
+        const { error } = validate(schema)
 
-        if (error) return res.status(400).json({ msg: error.details[0].message })
+        if (error) return Response.notOk(res, error.details[0].message )
 
         next()
 
     } catch (e) {
-        return res.status(500).json({ msg: e })
+        return Response.notOk(res, e.message)
     }
 
 }

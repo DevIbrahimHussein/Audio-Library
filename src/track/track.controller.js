@@ -59,10 +59,7 @@ exports.deleteTrack = async (req, res) => {
 exports.listTracksByAlbumId = async (req, res) => {
 
     try {
-        let filter = {}
-        filter.album = req.params.albumId
-        if (req.query.category) filter.category = req.query.category
-        const data = await allTracksWithAlbumId(filter)
+        const data = await allTracksWithAlbumId(req.params, req.query)
         return Response.ok(res, data)
 
     } catch (e) {
