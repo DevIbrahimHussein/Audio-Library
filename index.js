@@ -15,6 +15,18 @@ const http = require('http')
 const server = http.createServer(app)
 
 require('dotenv').config()
+
+// --------------------------------------- SOCKET IO -----------------------------
+
+const { Server } = require("socket.io")
+const io = new Server(server)
+
+io.on('connection', (req, res) => { 
+  console.log('a user connected')
+})
+
+// ----------------------------------------------------------------
+
 // load database
 const databaseConnection = require('./src/config/database.config')
 
