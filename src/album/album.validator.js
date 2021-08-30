@@ -3,18 +3,16 @@ const Response = require('../utils/response')
 
 exports.validateAlbumRequest = async (req, res, next) => {
 
-    const schema = {
-        body: Joi.object({
-            name: Joi.string().required(),
-            description: Joi.string().required()
-        })
-    }
+    const schema = Joi.object({
+        name: Joi.string().required(),
+        description: Joi.string().required()
+    })
 
     try {
 
-        const { error } = validate(schema)
+        const { error } = schema.validate(req.body)
 
-        if (error) return Response.notOk(res, error.details[0].message )
+        if (error) return Response.notOk(res, error.details[0].message)
 
         next()
 
